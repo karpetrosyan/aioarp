@@ -1,9 +1,9 @@
 import socket
 import anyio
 import select
+from anyio.abc import AsyncResource
 
-
-class AsyncSocket:
+class AsyncSocket(AsyncResource):
 
     def __init__(self,
                  interface: str):
@@ -27,3 +27,11 @@ class AsyncSocket:
             nsent = self.sock.send(frame)
             frame = frame[nsent:]
             await anyio.sleep(0)
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        with anyio.CancelScope(shield=True):
+            anyio.aclose_forcefully()
+            self.sock.close()

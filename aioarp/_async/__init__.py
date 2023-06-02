@@ -1,6 +1,6 @@
 import ipaddress
 
-from aioarp.arp import ArpPacket, EthPacket, Protocol, ETHERNET_HEADER_SIZE, ARP_HEADER_SIZE
+from aioarp._arp import ArpPacket, EthPacket, Protocol, ETHERNET_HEADER_SIZE, ARP_HEADER_SIZE
 from ..backends._async import AsyncSocket
 
 
