@@ -14,6 +14,10 @@ __all__ = (
     'parse_ip'
 )
 
+OUR_MAC = None
+OUR_IP = None
+
+
 def is_valid_ipv4(ip: str) -> bool:
     try:
         ipaddress.IPv4Address(ip)
@@ -23,15 +27,25 @@ def is_valid_ipv4(ip: str) -> bool:
 
 
 def get_mac(interface: str) -> str:
+    global OUR_MAC
+    if OUR_MAC:
+        return OUR_MAC
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         info = fcntl.ioctl(s.fileno(), 0x8927, struct.pack('256s', bytes(interface, 'utf-8')[:15]))
-        return ':'.join('%02x' % b for b in info[18:24])
+        mac = ':'.join('%02x' % b for b in info[18:24])
+        OUR_MAC = mac
+        return OUR_MAC
 
 
 def get_ip() -> str:
+    global OUR_IP
+    if OUR_IP:
+        return OUR_IP
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("1.1.1.1", 80))
-        return typing.cast(str, s.getsockname()[0])
+        ip = typing.cast(str, s.getsockname()[0])
+        OUR_IP = ip
+        return OUR_IP
 
 
 def enforce_mac(mac: str) -> bytes:
