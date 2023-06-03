@@ -7,6 +7,7 @@ SUBS = [
     ('from ..backends._async import AsyncSocket', 'from ..backends._sync import Socket'),
     ('AsyncSocket', 'Socket'),
     ('await ', ''),
+    ('async_send_arp', 'sync_send_arp')
 ]
 
 COMPILED_SUBS = [

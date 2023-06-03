@@ -125,8 +125,8 @@ class ArpPacket:
             frame
         )
         return cls(
-            hardware_type=hardware_type,
-            protocol_type=protocol_type,
+            hardware_type=HardwareType(hardware_type),
+            protocol_type=Protocol(protocol_type),
             opcode=Opcode(opcode),
             sender_mac=parse_mac(sender_mac),
             sender_ip=parse_ip(sender_ip),

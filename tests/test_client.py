@@ -1,9 +1,7 @@
 import aioarp
-from aioarp._mock import mock_get_ip
-from aioarp._mock import mock_get_mac
-from aioarp import build_arp_packet
-from aioarp import HardwareType
-from aioarp import Protocol
+from aioarp import HardwareType, Protocol, build_arp_packet
+from aioarp._mock import mock_get_ip, mock_get_mac
+
 
 def test_build_packet(monkeypatch):
     monkeypatch.setattr(aioarp._client, 'get_ip', mock_get_ip('127.0.0.1'))

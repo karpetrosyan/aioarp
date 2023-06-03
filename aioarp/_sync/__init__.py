@@ -7,6 +7,9 @@ from aioarp.defaults import DEFAULT_READ_TIMEOUT, DEFAULT_REPLY_MISSING_TIME, DE
 
 from ..backends._sync import Socket
 
+__all__ = (
+    'sync_send_arp',
+)
 
 def receive_arp(sock: Socket, timeout: float) -> ArpPacket:
     start_time = time.time()
