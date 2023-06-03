@@ -29,9 +29,9 @@ dependencies = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/unknown/aioarp#readme"
-Issues = "https://github.com/unknown/aioarp/issues"
-Source = "https://github.com/unknown/aioarp"
+Documentation = "https://github.com/karosis88/aioarp#readme"
+Issues = "https://github.com/karosis88/aioarp/issues"
+Source = "https://github.com/karosis88/aioarp"
 
 [tool.hatch.version]
 path = "aioarp/__about__.py"
