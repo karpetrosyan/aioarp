@@ -5,7 +5,8 @@ from aioarp import _exceptions as exc
 from aioarp._arp import ArpPacket, EthPacket, Protocol, ETHERNET_HEADER_SIZE, ARP_HEADER_SIZE
 from aioarp._utils import is_valid_ipv4
 from ..backends._sync import Socket
-
+from aioarp.defaults import DEFAULT_READ_TIMEOUT
+from aioarp.defaults import DEFAULT_WRITE_TIMEOUT
 
 def receive_arp(sock: Socket, timeout: float) -> typing.Optional[ArpPacket]:
     start_time = time.time()
@@ -17,7 +18,7 @@ def receive_arp(sock: Socket, timeout: float) -> typing.Optional[ArpPacket]:
 
         # Try to read frame
         try:
-            frame = sock.receive_frame()
+            frame = sock.receive_frame(timeout=DEFAULT_READ_TIMEOUT)
         except Exception as e:
             raise exc.NotFoundError() from e
 
@@ -47,7 +48,8 @@ def send_arp(arp_packet: ArpPacket, interface: str) -> typing.Optional[ArpPacket
     )
 
     try:
-        sock.write_frame(ethernet_packet.build_frame() + arp_packet.build_frame())
+        frame_to_send = ethernet_packet.build_frame() + arp_packet.build_frame()
+        sock.write_frame(frame_to_send, timeout=DEFAULT_WRITE_TIMEOUT)
     except exc.WriteTimeoutError as e:
         raise exc.NotFoundError from e
 
