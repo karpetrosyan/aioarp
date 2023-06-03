@@ -1,5 +1,9 @@
 import socket
 
+from aioarp import _exceptions as exc
+
+
+# TODO: add error map
 
 class Socket:
 
@@ -9,8 +13,23 @@ class Socket:
         sock.bind((interface, 0))
         self.sock = sock
 
-    def receive_frame(self) -> bytes:
-        return self.sock.recv(1)
+    def receive_frame(self, timeout: float) -> bytes:
+        self.sock.settimeout(timeout)
+        try:
+            frame = self.sock.recv(1123123)
+        except socket.timeout:
+            raise exc.ReadTimeoutError()
+        return frame
 
-    def write_frame(self, frame: bytes) -> None:
-        self.sock.sendall(frame)
+    def write_frame(self, frame: bytes, timeout: float) -> None:
+        self.sock.settimeout(timeout)
+        try:
+            self.sock.sendall(frame)
+        except socket.timeout:
+            raise exc.WriteTimeoutError()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.sock.close()
