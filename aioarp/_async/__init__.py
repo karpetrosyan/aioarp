@@ -7,6 +7,7 @@ from aioarp._utils import is_valid_ipv4
 from ..backends._async import AsyncSocket
 from aioarp.defaults import DEFAULT_READ_TIMEOUT
 from aioarp.defaults import DEFAULT_WRITE_TIMEOUT
+from aioarp.defaults import DEFAULT_REPLY_MISSING_TIME
 
 async def receive_arp(sock: AsyncSocket, timeout: float) -> typing.Optional[ArpPacket]:
     start_time = time.time()
@@ -53,4 +54,4 @@ async def send_arp(arp_packet: ArpPacket, interface: str) -> typing.Optional[Arp
     except exc.WriteTimeoutError as e:
         raise exc.NotFoundError from e
 
-    return await receive_arp(sock)
+    return await receive_arp(sock, DEFAULT_REPLY_MISSING_TIME)

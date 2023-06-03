@@ -114,18 +114,15 @@ class ArpPacket:
             packing_format,
             frame
         )
-        try:
-            return cls(
-                hardware_type=hardware_type,
-                protocol_type=protocol_type,
-                opcode=Opcode(opcode),
-                sender_mac=parse_mac(sender_mac),
-                sender_ip=parse_ip(sender_ip),
-                target_mac=parse_mac(target_mac),
-                target_ip=parse_ip(target_ip)
-            )
-        except Exception as e:
-            print('invalid', e)
+        return cls(
+            hardware_type=hardware_type,
+            protocol_type=protocol_type,
+            opcode=Opcode(opcode),
+            sender_mac=parse_mac(sender_mac),
+            sender_ip=parse_ip(sender_ip),
+            target_mac=parse_mac(target_mac),
+            target_ip=parse_ip(target_ip)
+        )
 
     def build_frame(self) -> bytes:
         hardware_format = str(self.hardware_length) + 's'
