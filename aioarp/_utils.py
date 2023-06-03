@@ -1,3 +1,29 @@
+import socket
+import fcntl
+import struct
+import ipaddress
+
+
+def is_valid_ipv4(ip: str) -> bool:
+    try:
+        ipaddress.IPv4Address(ip)
+        return True
+    except ipaddress.AddressValueError:
+        return False
+
+
+def get_mac(interface) -> str:
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+        info = fcntl.ioctl(s.fileno(), 0x8927, struct.pack('256s', bytes(interface, 'utf-8')[:15]))
+        return ':'.join('%02x' % b for b in info[18:24])
+
+
+def get_ip() -> str:
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+        s.connect(("1.1.1.1", 80))
+        return s.getsockname()[0]
+
+
 def enforce_mac(mac: str) -> bytes:
     mac_bytes = []
     for b in mac.split(':'):
