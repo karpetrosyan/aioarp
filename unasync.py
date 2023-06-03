@@ -1,6 +1,5 @@
 import os
 import re
-import sys
 
 SUBS = [
     ('async def async_send_arp', 'def sync_send_arp'),
@@ -30,7 +29,7 @@ def unasync_file(async_path, sync_path):
                 sync_file.write(line)
 
 def unasync(async_dir, sync_dir):
-    for dirpath, dirnames, filenames in os.walk(async_dir):
+    for dirpath, _dirnames, filenames in os.walk(async_dir):
         for filename in filenames:
             if filename.endswith('.py'):
                 rel_dir = os.path.relpath(dirpath, async_dir)
