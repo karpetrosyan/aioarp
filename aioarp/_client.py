@@ -1,17 +1,16 @@
 import ipaddress
 
-from aioarp._arp import ArpPacket
-from aioarp._arp import HardwareType, Protocol, Opcode
-from aioarp._sync import sync_send_arp
+from aioarp._arp import ArpPacket, HardwareType, Protocol
 from aioarp._async import async_send_arp
-from aioarp._utils import get_ip
-from aioarp._utils import get_mac
+from aioarp._sync import sync_send_arp
+from aioarp._utils import get_ip, get_mac
 
 __all__ = (
     'build_arp_packet',
     'request',
     'arequest'
 )
+
 
 def build_arp_packet(
         interface: str,
@@ -44,7 +43,7 @@ def build_arp_packet(
 def request(
         interface: str,
         target_ip: str,
-):
+) -> ArpPacket:
     request_packet = build_arp_packet(interface, target_ip)
     arp_response = sync_send_arp(request_packet, interface)
     return arp_response
@@ -53,7 +52,7 @@ def request(
 async def arequest(
         interface: str,
         target_ip: str,
-):
+) -> ArpPacket:
     request_packet = build_arp_packet(interface, target_ip)
     arp_response = await async_send_arp(request_packet, interface)
     return arp_response

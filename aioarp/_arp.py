@@ -2,7 +2,7 @@ import struct
 import typing
 from enum import Enum
 
-from aioarp._utils import parse_mac, enforce_mac, parse_ip, enforce_ip
+from aioarp._utils import enforce_ip, enforce_mac, parse_ip, parse_mac
 
 ETHERNET_HEADER_SIZE = 14
 ARP_HEADER_SIZE = 28
@@ -44,7 +44,7 @@ class EthPacket:
         self.proto = proto
 
     @classmethod
-    def parse(cls, frame: bytes):
+    def parse(cls, frame: bytes) -> "EthPacket":
         target_mac, sender_mac, proto = struct.unpack(
             '!6s6sH',
             frame
@@ -63,7 +63,7 @@ class EthPacket:
             self.proto.value
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<EthPacket target={self.target_mac} source={self.sender_mac} proto={self.proto.name}>"
 
 
@@ -94,7 +94,7 @@ class ArpPacket:
         return size_of(self.protocol_type)
 
     @classmethod
-    def parse(cls, frame: bytes):
+    def parse(cls, frame: bytes) -> "ArpPacket":
         hardware_format = '6s'
         protocol_format = '4s'
         packing_format = ''.join([
@@ -163,7 +163,7 @@ class ArpPacket:
             enforce_ip(self.target_ip),
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<ArpPacket target_ip={self.target_ip}>"
 
 

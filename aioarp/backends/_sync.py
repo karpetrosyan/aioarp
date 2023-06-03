@@ -1,7 +1,7 @@
 import socket
+import typing
 
 from aioarp import _exceptions as exc
-
 
 # TODO: add error map
 
@@ -28,8 +28,8 @@ class Socket:
         except socket.timeout:
             raise exc.WriteTimeoutError()
 
-    def __enter__(self):
+    def __enter__(self) -> 'Socket':
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type: typing.Any, exc_val: typing.Any, exc_tb: typing.Any) -> None:
         self.sock.close()

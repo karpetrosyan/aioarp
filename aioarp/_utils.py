@@ -1,7 +1,8 @@
-import socket
 import fcntl
-import struct
 import ipaddress
+import socket
+import struct
+import typing
 
 __all__ = (
     'is_valid_ipv4',
@@ -21,7 +22,7 @@ def is_valid_ipv4(ip: str) -> bool:
         return False
 
 
-def get_mac(interface) -> str:
+def get_mac(interface: str) -> str:
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         info = fcntl.ioctl(s.fileno(), 0x8927, struct.pack('256s', bytes(interface, 'utf-8')[:15]))
         return ':'.join('%02x' % b for b in info[18:24])
@@ -30,7 +31,7 @@ def get_mac(interface) -> str:
 def get_ip() -> str:
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("1.1.1.1", 80))
-        return s.getsockname()[0]
+        return typing.cast(str, s.getsockname()[0])
 
 
 def enforce_mac(mac: str) -> bytes:

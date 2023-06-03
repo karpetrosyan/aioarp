@@ -1,16 +1,14 @@
 import time
-import typing
 
 from aioarp import _exceptions as exc
-from aioarp._arp import ArpPacket, EthPacket, Protocol, ETHERNET_HEADER_SIZE, ARP_HEADER_SIZE
+from aioarp._arp import ARP_HEADER_SIZE, ETHERNET_HEADER_SIZE, ArpPacket, EthPacket, Protocol
 from aioarp._utils import is_valid_ipv4
+from aioarp.defaults import DEFAULT_READ_TIMEOUT, DEFAULT_REPLY_MISSING_TIME, DEFAULT_WRITE_TIMEOUT
+
 from ..backends._sync import Socket
-from aioarp.defaults import DEFAULT_READ_TIMEOUT
-from aioarp.defaults import DEFAULT_WRITE_TIMEOUT
-from aioarp.defaults import DEFAULT_REPLY_MISSING_TIME
 
 
-def receive_arp(sock: Socket, timeout: float) -> typing.Optional[ArpPacket]:
+def receive_arp(sock: Socket, timeout: float) -> ArpPacket:
     start_time = time.time()
     while True:
 
@@ -41,7 +39,7 @@ def receive_arp(sock: Socket, timeout: float) -> typing.Optional[ArpPacket]:
             ...
 
 
-def sync_send_arp(arp_packet: ArpPacket, interface: str) -> typing.Optional[ArpPacket]:
+def sync_send_arp(arp_packet: ArpPacket, interface: str) -> ArpPacket:
     sock = Socket(interface)
     ethernet_packet = EthPacket(
         target_mac=arp_packet.target_mac,

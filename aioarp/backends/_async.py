@@ -7,7 +7,6 @@ from anyio.abc import AsyncResource
 
 from aioarp import _exceptions as exc
 
-
 # TODO: add error map
 
 class AsyncSocket(AsyncResource):
@@ -43,8 +42,5 @@ class AsyncSocket(AsyncResource):
         if frame:
             raise exc.WriteTimeoutError()
 
-    async def __aenter__(self):
-        return self
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def aclose(self) -> None:
         self.sock.close()
