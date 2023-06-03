@@ -1,6 +1,11 @@
 
+class AioArpError(Exception):
+    ...
 
-class TimeoutError:
+class NotFoundError(AioArpError):
+    ...
+
+class TimeoutError(AioArpError):
     ...
 
 class ReadTimeoutError(TimeoutError):
