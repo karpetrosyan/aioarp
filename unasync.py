@@ -3,11 +3,11 @@ import re
 import sys
 
 SUBS = [
+    ('async def async_send_arp', 'def sync_send_arp'),
     ('async def', 'def'),
     ('from ..backends._async import AsyncSocket', 'from ..backends._sync import Socket'),
     ('AsyncSocket', 'Socket'),
-    ('await ', '')
-
+    ('await ', ''),
 ]
 
 COMPILED_SUBS = [

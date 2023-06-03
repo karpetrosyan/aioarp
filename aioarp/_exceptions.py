@@ -1,4 +1,11 @@
 
+__all__ = (
+    'AioArpError',
+    'NotFoundError',
+    'TimeoutError',
+    'ReadTimeoutError'
+)
+
 class AioArpError(Exception):
     ...
 

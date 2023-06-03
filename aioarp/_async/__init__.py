@@ -9,6 +9,7 @@ from aioarp.defaults import DEFAULT_READ_TIMEOUT
 from aioarp.defaults import DEFAULT_WRITE_TIMEOUT
 from aioarp.defaults import DEFAULT_REPLY_MISSING_TIME
 
+
 async def receive_arp(sock: AsyncSocket, timeout: float) -> typing.Optional[ArpPacket]:
     start_time = time.time()
     while True:
@@ -40,7 +41,7 @@ async def receive_arp(sock: AsyncSocket, timeout: float) -> typing.Optional[ArpP
             ...
 
 
-async def send_arp(arp_packet: ArpPacket, interface: str) -> typing.Optional[ArpPacket]:
+async def async_send_arp(arp_packet: ArpPacket, interface: str) -> typing.Optional[ArpPacket]:
     sock = AsyncSocket(interface)
     ethernet_packet = EthPacket(
         target_mac=arp_packet.target_mac,
