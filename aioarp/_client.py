@@ -49,7 +49,7 @@ def request(
         timeout: typing.Optional[float] = None,
         sock: typing.Optional[SocketInterface] = None
 ) -> ArpPacket:
-    if not sock:
+    if not sock:  # pragma: no cover
         sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
     with Stream(interface=interface,
                     sock=sock) as stream:
@@ -64,7 +64,7 @@ async def arequest(
         timeout: typing.Optional[float] = None,
         sock: typing.Optional[SocketInterface] = None
 ) -> ArpPacket:
-    if not sock:
+    if not sock:  # pragma: no cover
         sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
     with AsyncStream(interface=interface,
                     sock=sock) as stream:
