@@ -6,14 +6,14 @@ from aioarp._arp import ARP_HEADER_SIZE, ETHERNET_HEADER_SIZE, ArpPacket, EthPac
 from aioarp._utils import is_valid_ipv4
 from aioarp.defaults import DEFAULT_READ_TIMEOUT, DEFAULT_REPLY_MISSING_TIME, DEFAULT_WRITE_TIMEOUT
 
-from ..backends._async import AsyncSocket
+from ..backends._async import AsyncStream
 
 __all__ = (
     'async_send_arp',
 )
 
 
-async def receive_arp(sock: AsyncSocket, timeout: float) -> ArpPacket:
+async def receive_arp(sock: AsyncStream, timeout: float) -> ArpPacket:
     start_time = time.time()
     while True:
 
@@ -45,7 +45,7 @@ async def receive_arp(sock: AsyncSocket, timeout: float) -> ArpPacket:
 
 
 async def async_send_arp(arp_packet: ArpPacket, interface: str, timeout: typing.Optional[float] = None) -> ArpPacket:
-    sock = AsyncSocket(interface)
+    sock = AsyncStream(interface)
     ethernet_packet = EthPacket(
         target_mac=arp_packet.target_mac,
         sender_mac=arp_packet.sender_mac,
