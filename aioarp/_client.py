@@ -1,10 +1,14 @@
-import ipaddress
+import socket
 import typing
 
+import aioarp
 from aioarp._arp import ArpPacket, HardwareType, Protocol
 from aioarp._async import async_send_arp
 from aioarp._sync import sync_send_arp
-from aioarp._utils import get_ip, get_mac
+from aioarp._utils import get_ip, get_mac, is_valid_ipv4
+from aioarp.backends._async import AsyncStream
+from aioarp.backends._base import SocketInterface
+from aioarp.backends._sync import Stream
 
 __all__ = (
     'build_arp_packet',
@@ -17,10 +21,8 @@ def build_arp_packet(
         interface: str,
         target_ip: str
 ) -> ArpPacket:
-    try:
-        ipaddress.IPv4Address(target_ip)
-    except ipaddress.AddressValueError:
-        raise Exception("Invalid IPv4 Address was received")
+    if not is_valid_ipv4(target_ip):
+        raise aioarp.InvalidIpError("Invalid IPv4 Address was received")
 
     hardware_type = HardwareType.ethernet
     protocol_type = Protocol.ip
@@ -45,17 +47,27 @@ def request(
         interface: str,
         target_ip: str,
         timeout: typing.Optional[float] = None,
+        sock: typing.Optional[SocketInterface] = None
 ) -> ArpPacket:
-    request_packet = build_arp_packet(interface, target_ip)
-    arp_response = sync_send_arp(request_packet, interface, timeout)
-    return arp_response
+    if not sock:
+        sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
+    with Stream(interface=interface,
+                    sock=sock) as stream:
+        request_packet = build_arp_packet(interface, target_ip)
+        arp_response = sync_send_arp(request_packet, stream, timeout)
+        return arp_response
 
 
 async def arequest(
         interface: str,
         target_ip: str,
-        timeout: typing.Optional[float] = None
+        timeout: typing.Optional[float] = None,
+        sock: typing.Optional[SocketInterface] = None
 ) -> ArpPacket:
-    request_packet = build_arp_packet(interface, target_ip)
-    arp_response = await async_send_arp(request_packet, interface, timeout)
-    return arp_response
+    if not sock:
+        sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
+    with AsyncStream(interface=interface,
+                    sock=sock) as stream:
+        request_packet = build_arp_packet(interface, target_ip)
+        arp_response = await async_send_arp(request_packet, stream, timeout)
+        return arp_response
