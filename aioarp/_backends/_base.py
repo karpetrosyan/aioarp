@@ -1,11 +1,12 @@
 import typing
 
 from typing_extensions import TypeAlias
+from typing_extensions import Protocol
 
 _Address: TypeAlias = typing.Tuple[typing.Any, ...]
 
 
-class SocketInterface(typing.Protocol):
+class SocketInterface(Protocol):
 
     def send(self, data: bytes) -> int: ...
 
