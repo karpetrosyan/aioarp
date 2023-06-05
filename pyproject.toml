@@ -25,7 +25,8 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "anyio"
+  "anyio==3.7.6",
+  "typing_extensions==4.6.3"
 ]
 
 [project.urls]
