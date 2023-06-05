@@ -1,6 +1,6 @@
 # Changelog
 
-## development
+# 0.0.3 (6/5/2023)
 
 - Add `sock` argument to `request` and `arequest` functions.
 - Add `timeout` argument to `request` and `arequest` functions.
