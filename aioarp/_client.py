@@ -4,11 +4,11 @@ import typing
 import aioarp
 from aioarp._arp import ArpPacket, HardwareType, Protocol
 from aioarp._async import async_send_arp
+from aioarp._backends._async import AsyncStream
+from aioarp._backends._base import SocketInterface
+from aioarp._backends._sync import Stream
 from aioarp._sync import sync_send_arp
 from aioarp._utils import get_ip, get_mac, is_valid_ipv4
-from aioarp.backends._async import AsyncStream
-from aioarp.backends._base import SocketInterface
-from aioarp.backends._sync import Stream
 
 __all__ = (
     'build_arp_packet',

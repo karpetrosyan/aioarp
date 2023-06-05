@@ -1,12 +1,10 @@
 import time
 import typing
 
-from aioarp import _exceptions as exc
+from aioarp import Stream, _exceptions as exc
 from aioarp._arp import ARP_HEADER_SIZE, ETHERNET_HEADER_SIZE, ArpPacket, EthPacket, Protocol
 from aioarp._utils import is_valid_ipv4
 from aioarp.defaults import DEFAULT_READ_TIMEOUT, DEFAULT_REPLY_MISSING_TIME, DEFAULT_WRITE_TIMEOUT
-
-from .backends._sync import Stream
 
 __all__ = (
     'sync_send_arp',

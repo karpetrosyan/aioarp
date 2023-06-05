@@ -6,7 +6,7 @@ from aioarp._arp import ARP_HEADER_SIZE, ETHERNET_HEADER_SIZE, ArpPacket, EthPac
 from aioarp._utils import is_valid_ipv4
 from aioarp.defaults import DEFAULT_READ_TIMEOUT, DEFAULT_REPLY_MISSING_TIME, DEFAULT_WRITE_TIMEOUT
 
-from .backends._async import AsyncStream
+from ._backends._async import AsyncStream
 
 __all__ = (
     'async_send_arp',
