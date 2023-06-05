@@ -1,13 +1,13 @@
-import os
 import re
 
 SUBS = [
     ('async def async_send_arp', 'def sync_send_arp'),
     ('async def', 'def'),
-    ('from ..backends._async import AsyncStream', 'from ..backends._sync import Stream'),
+    ('from .backends._async import AsyncStream', 'from .backends._sync import Stream'),
     ('AsyncStream', 'Stream'),
     ('await ', ''),
-    ('async_send_arp', 'sync_send_arp')
+    ('async_send_arp', 'sync_send_arp'),
+    ('aioarp.arequest', 'aioarp.request')
 ]
 
 COMPILED_SUBS = [
@@ -30,3 +30,4 @@ def unasync_file(async_path, sync_path):
                 sync_file.write(line)
 
 unasync_file("aioarp/_async.py", "aioarp/_sync.py")
+unasync_file("tests/test_async.py", "tests/test_sync.py")
