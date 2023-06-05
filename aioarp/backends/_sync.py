@@ -4,26 +4,21 @@ import typing
 from aioarp import _exceptions as exc
 from aioarp.backends._base import SocketInterface
 
-
 # TODO: add error map
 
 class Stream:
 
     def __init__(self,
                  interface: str,
-                 sock: typing.Optional[SocketInterface] = None
+                 sock: SocketInterface
                  ):
-        if sock:
-            self.sock = sock
-        else:
-            self.sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
-        self.sock.bind((interface, 0))
+        self.sock = sock
 
     def receive_frame(self, timeout: float) -> bytes:
         self.sock.settimeout(timeout)
         try:
             frame = self.sock.recv(1123123)
-        except socket.timeout:
+        except socket.timeout:  # pragma: no cover
             raise exc.ReadTimeoutError()
         return frame
 
@@ -31,7 +26,7 @@ class Stream:
         self.sock.settimeout(timeout)
         try:
             self.sock.sendall(frame)
-        except socket.timeout:
+        except socket.timeout:  # pragma: no cover
             raise exc.WriteTimeoutError()
 
     def __enter__(self) -> 'Stream':

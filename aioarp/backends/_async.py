@@ -1,24 +1,20 @@
-import socket
+import select
 import typing
 
 import anyio
-import select
-from anyio.abc import AsyncResource
-from ._base import SocketInterface
 
 from aioarp import _exceptions as exc
 
+from ._base import SocketInterface
 
-class AsyncStream(AsyncResource):
+
+class AsyncStream:
 
     def __init__(self,
                  interface: str,
-                 sock: typing.Optional[SocketInterface] = None
+                 sock: SocketInterface
                  ):
-        if sock:
-            self.sock = sock
-        else:
-            self.sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
+        self.sock = sock
         self.sock.bind((interface, 0))
 
     async def receive_frame(self, timeout: float) -> bytes:
@@ -29,8 +25,8 @@ class AsyncStream(AsyncResource):
                 if r:
                     frame = self.sock.recv(1123123)
                     break
-                await anyio.sleep(0)
-        if not frame:
+                await anyio.sleep(0)  # pragma: no cover
+        if not frame:   # pragma: no cover
             raise exc.ReadTimeoutError()
         return frame
 
@@ -43,8 +39,14 @@ class AsyncStream(AsyncResource):
                 nsent = self.sock.send(frame)
                 frame = frame[nsent:]
                 await anyio.sleep(0)
-        if frame:
+        if frame:  # pragma: no cover
             raise exc.WriteTimeoutError()
 
-    async def aclose(self) -> None:
+    def close(self) -> None:
         self.sock.close()
+
+    def __enter__(self) -> "AsyncStream":
+        return self
+
+    def __exit__(self, exc_type: typing.Any, exc_val: typing.Any, exc_tb: typing.Any) -> None:
+        self.close()
