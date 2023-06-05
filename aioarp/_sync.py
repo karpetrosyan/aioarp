@@ -6,7 +6,7 @@ from aioarp._arp import ARP_HEADER_SIZE, ETHERNET_HEADER_SIZE, ArpPacket, EthPac
 from aioarp._utils import is_valid_ipv4
 from aioarp.defaults import DEFAULT_READ_TIMEOUT, DEFAULT_REPLY_MISSING_TIME, DEFAULT_WRITE_TIMEOUT
 
-from .backends._async import Stream
+from .backends._sync import Stream
 
 __all__ = (
     'sync_send_arp',
@@ -24,7 +24,7 @@ def receive_arp(sock: Stream, timeout: float) -> ArpPacket:
         # Try to read frame
         try:
             frame = sock.receive_frame(timeout=DEFAULT_READ_TIMEOUT)
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             raise exc.NotFoundError() from e
 
         # Extract the ethernet header
@@ -39,13 +39,14 @@ def receive_arp(sock: Stream, timeout: float) -> ArpPacket:
                 frame[ETHERNET_HEADER_SIZE: ETHERNET_HEADER_SIZE + ARP_HEADER_SIZE])
             if is_valid_ipv4(arp_response.sender_ip):
                 return arp_response
-        except BaseException:
+        except BaseException:  # pragma: no cover
             # TODO: catch concrete errors
             ...
 
 
-def sync_send_arp(arp_packet: ArpPacket, interface: str, timeout: typing.Optional[float] = None) -> ArpPacket:
-    sock = Stream(interface)
+def sync_send_arp(arp_packet: ArpPacket,
+                         stream: Stream,
+                         timeout: typing.Optional[float] = None) -> ArpPacket:
     ethernet_packet = EthPacket(
         target_mac=arp_packet.target_mac,
         sender_mac=arp_packet.sender_mac,
@@ -54,8 +55,8 @@ def sync_send_arp(arp_packet: ArpPacket, interface: str, timeout: typing.Optiona
 
     try:
         frame_to_send = ethernet_packet.build_frame() + arp_packet.build_frame()
-        sock.write_frame(frame_to_send, timeout=DEFAULT_WRITE_TIMEOUT)
-    except exc.WriteTimeoutError as e:
+        stream.write_frame(frame_to_send, timeout=DEFAULT_WRITE_TIMEOUT)
+    except exc.WriteTimeoutError as e:  # pragma: no cover
         raise exc.NotFoundError from e
 
-    return receive_arp(sock, timeout or DEFAULT_REPLY_MISSING_TIME)
+    return receive_arp(stream, timeout or DEFAULT_REPLY_MISSING_TIME)

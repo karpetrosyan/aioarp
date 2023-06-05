@@ -24,7 +24,7 @@ async def receive_arp(sock: AsyncStream, timeout: float) -> ArpPacket:
         # Try to read frame
         try:
             frame = await sock.receive_frame(timeout=DEFAULT_READ_TIMEOUT)
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             raise exc.NotFoundError() from e
 
         # Extract the ethernet header
@@ -39,13 +39,14 @@ async def receive_arp(sock: AsyncStream, timeout: float) -> ArpPacket:
                 frame[ETHERNET_HEADER_SIZE: ETHERNET_HEADER_SIZE + ARP_HEADER_SIZE])
             if is_valid_ipv4(arp_response.sender_ip):
                 return arp_response
-        except BaseException:
+        except BaseException:  # pragma: no cover
             # TODO: catch concrete errors
             ...
 
 
-async def async_send_arp(arp_packet: ArpPacket, interface: str, timeout: typing.Optional[float] = None) -> ArpPacket:
-    sock = AsyncStream(interface)
+async def async_send_arp(arp_packet: ArpPacket,
+                         stream: AsyncStream,
+                         timeout: typing.Optional[float] = None) -> ArpPacket:
     ethernet_packet = EthPacket(
         target_mac=arp_packet.target_mac,
         sender_mac=arp_packet.sender_mac,
@@ -54,8 +55,8 @@ async def async_send_arp(arp_packet: ArpPacket, interface: str, timeout: typing.
 
     try:
         frame_to_send = ethernet_packet.build_frame() + arp_packet.build_frame()
-        await sock.write_frame(frame_to_send, timeout=DEFAULT_WRITE_TIMEOUT)
-    except exc.WriteTimeoutError as e:
+        await stream.write_frame(frame_to_send, timeout=DEFAULT_WRITE_TIMEOUT)
+    except exc.WriteTimeoutError as e:  # pragma: no cover
         raise exc.NotFoundError from e
 
-    return await receive_arp(sock, timeout or DEFAULT_REPLY_MISSING_TIME)
+    return await receive_arp(stream, timeout or DEFAULT_REPLY_MISSING_TIME)
