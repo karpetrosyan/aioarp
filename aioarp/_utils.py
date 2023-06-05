@@ -26,7 +26,7 @@ def is_valid_ipv4(ip: str) -> bool:
         return False
 
 
-def get_mac(interface: str) -> str:
+def get_mac(interface: str) -> str:  # pragma: no cover
     global OUR_MAC
     if OUR_MAC:
         return OUR_MAC
@@ -37,7 +37,7 @@ def get_mac(interface: str) -> str:
         return OUR_MAC
 
 
-def get_ip() -> str:
+def get_ip() -> str:  # pragma: no cover
     global OUR_IP
     if OUR_IP:
         return OUR_IP
