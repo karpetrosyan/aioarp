@@ -4,3 +4,4 @@ ruff
 mypy
 pytest
 hatch
+coverage

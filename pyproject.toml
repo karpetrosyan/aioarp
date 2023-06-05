@@ -53,3 +53,10 @@ exclude = ["unasync.py", "_mock.py"]
 module = "tests.*"
 disallow_untyped_defs = false
 check_untyped_defs = true
+
+[tool.coverage.report]
+
+exclude_also = [
+  '__repr__',
+  'raise NotImplementedError()'
+]

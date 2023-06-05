@@ -173,4 +173,4 @@ def size_of(type: typing.Union[HardwareType, Protocol]) -> int:
     elif type is HardwareType.ethernet:
         return 6
     else:
-        raise Exception
+        raise NotImplementedError()
