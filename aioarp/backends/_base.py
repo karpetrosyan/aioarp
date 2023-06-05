@@ -1,6 +1,7 @@
 import typing
+from typing_extensions import TypeAlias
 
-_Address: typing.TypeAlias = typing.Tuple[typing.Any, ...]
+_Address: TypeAlias = typing.Tuple[typing.Any, ...]
 
 
 class SocketInterface(typing.Protocol):
