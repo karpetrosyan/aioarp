@@ -1,4 +1,5 @@
 import select
+import socket
 import typing
 
 import anyio
@@ -7,14 +8,20 @@ from aioarp import _exceptions as exc
 
 from ._base import SocketInterface
 
+__all__ = (
+    'AsyncStream'
+)
 
 class AsyncStream:
 
     def __init__(self,
                  interface: str,
-                 sock: SocketInterface
+                 sock: typing.Optional[SocketInterface] = None
                  ):
-        self.sock = sock
+        if not sock:  # pragma: no cover
+            self.sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
+        else:
+            self.sock = sock
         self.sock.bind((interface, 0))
 
     async def receive_frame(self, timeout: float) -> bytes:

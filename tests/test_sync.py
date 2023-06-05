@@ -1,7 +1,7 @@
 import pytest
 
 import aioarp
-from aioarp.backends._mock import MockSocket
+from aioarp._backends._mock import MockSocket
 
 eth_header_arp = (
     # Eth Header
