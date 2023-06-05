@@ -8,6 +8,8 @@
 **Table of Contents**
 
 - [Installation](#installation)
+- [ARP request](#sending-arp-requests)
+- [ARP response](#arp-response)
 - [License](#license)
 
 ## Installation
@@ -16,11 +18,7 @@
 pip install aioarp
 ```
 
-## License
-
-`aioarp` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
-
-## Sending ARP requests
+## How to send ARP requests
 
 ### Sync
 ```python
@@ -67,14 +65,14 @@ If you want, you can explicitly set all of the **ARP** headers. To do so, create
 >>> import aioarp
 >>>
 >>> arp_packet = aioarp.ArpPacket(
-... hardware_type=aioarp.HardwareType.ethernet,
-... protocol_type=aioarp.Protocol.ip,
-... sender_mac='11:11:11:11:11:11',
-... sender_ip='127.0.0.1',
-... target_mac='11:11:11:11:11:11',
-... target_ip='127.0.0.1',)
+...     hardware_type=aioarp.HardwareType.ethernet,
+...     protocol_type=aioarp.Protocol.ip,
+...     sender_mac='11:11:11:11:11:11',
+...     sender_ip='127.0.0.1',
+...     target_mac='11:11:11:11:11:11',
+...     target_ip='127.0.0.1')
 >>>
->>> response = aioarp.sync_send_arp(arp_packet, 'enp0s3')
+>>> response = aioarp.sync_send_arp(arp_packet, aioarp.Stream('enp0s3'))
 ```
 
 This is the packet that was sent over the network.
@@ -130,8 +128,9 @@ Each one has a distinct meaning, which can be found in https://en.wikipedia.org/
 
 If the response is not received, aioarp should throw a `aioarp.NotFoundError` exception. 
 
-This occurs when the default arp request `timeout expires`. The timeout is set to 5 by default; in future releases, we will add a parameter to allow you to change that value.
+This occurs when the default arp request `timeout expires`. The timeout is set to 5 by default, but it can be changed by passing the `timeout` argument to the `request` function.
 
+Without timeout
 ```python
 >>> import aioarp
 >>>
@@ -140,5 +139,14 @@ This occurs when the default arp request `timeout expires`. The timeout is set t
 ...     print(response.opcode)
 ... except aioarp.NotFoundError:
 ...     print('10.0.2.25 was not found :(')
+
 ```
+With timeout
+```python
+response = aioarp.request('enp0s3', '10.0.2.25', timeout=0.5)
+```
+
+## License
+
+`aioarp` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
 
