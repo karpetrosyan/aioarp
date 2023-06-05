@@ -1,7 +1,9 @@
 import tempfile
 import typing
 
-_Address: typing.TypeAlias = typing.Tuple[typing.Any, ...]
+from typing_extensions import TypeAlias
+
+_Address: TypeAlias = typing.Tuple[typing.Any, ...]
 
 
 class MockSocket:
