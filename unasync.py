@@ -29,14 +29,4 @@ def unasync_file(async_path, sync_path):
                 line = unasync_line(line)
                 sync_file.write(line)
 
-def unasync(async_dir, sync_dir):
-    for dirpath, _dirnames, filenames in os.walk(async_dir):
-        for filename in filenames:
-            if filename.endswith('.py'):
-                rel_dir = os.path.relpath(dirpath, async_dir)
-                async_path = os.path.normpath(os.path.join(async_dir, rel_dir, filename))
-                sync_path = os.path.normpath(os.path.join(sync_dir, rel_dir, filename))
-                unasync_file(async_path, sync_path)
-
-
-unasync("aioarp/_async", "aioarp/_sync")
+unasync_file("aioarp/_async.py", "aioarp/_sync.py")
