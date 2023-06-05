@@ -2,10 +2,10 @@ import socket
 import typing
 
 from aioarp import _exceptions as exc
-from aioarp.backends._base import SocketInterface
+from aioarp._backends._base import SocketInterface
 
 __all__ = (
-    'Stream'
+    'Stream',
 )
 class Stream:
 
@@ -13,6 +13,7 @@ class Stream:
                  interface: str,
                  sock: typing.Optional[SocketInterface] = None
                  ):
+        self.sock: SocketInterface
         if not sock:  # pragma: no cover
             self.sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
         else:

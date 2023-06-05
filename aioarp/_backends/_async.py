@@ -9,7 +9,7 @@ from aioarp import _exceptions as exc
 from ._base import SocketInterface
 
 __all__ = (
-    'AsyncStream'
+    'AsyncStream',
 )
 
 class AsyncStream:
@@ -18,6 +18,7 @@ class AsyncStream:
                  interface: str,
                  sock: typing.Optional[SocketInterface] = None
                  ):
+        self.sock: SocketInterface
         if not sock:  # pragma: no cover
             self.sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
         else:
