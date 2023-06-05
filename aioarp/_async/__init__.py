@@ -1,4 +1,5 @@
 import time
+import typing
 
 from aioarp import _exceptions as exc
 from aioarp._arp import ARP_HEADER_SIZE, ETHERNET_HEADER_SIZE, ArpPacket, EthPacket, Protocol
@@ -10,6 +11,7 @@ from ..backends._async import AsyncSocket
 __all__ = (
     'async_send_arp',
 )
+
 
 async def receive_arp(sock: AsyncSocket, timeout: float) -> ArpPacket:
     start_time = time.time()
@@ -42,7 +44,7 @@ async def receive_arp(sock: AsyncSocket, timeout: float) -> ArpPacket:
             ...
 
 
-async def async_send_arp(arp_packet: ArpPacket, interface: str) -> ArpPacket:
+async def async_send_arp(arp_packet: ArpPacket, interface: str, timeout: typing.Optional[float] = None) -> ArpPacket:
     sock = AsyncSocket(interface)
     ethernet_packet = EthPacket(
         target_mac=arp_packet.target_mac,
@@ -56,4 +58,4 @@ async def async_send_arp(arp_packet: ArpPacket, interface: str) -> ArpPacket:
     except exc.WriteTimeoutError as e:
         raise exc.NotFoundError from e
 
-    return await receive_arp(sock, DEFAULT_REPLY_MISSING_TIME)
+    return await receive_arp(sock, timeout or DEFAULT_REPLY_MISSING_TIME)

@@ -1,4 +1,5 @@
 import ipaddress
+import typing
 
 from aioarp._arp import ArpPacket, HardwareType, Protocol
 from aioarp._async import async_send_arp
@@ -43,16 +44,18 @@ def build_arp_packet(
 def request(
         interface: str,
         target_ip: str,
+        timeout: typing.Optional[float] = None,
 ) -> ArpPacket:
     request_packet = build_arp_packet(interface, target_ip)
-    arp_response = sync_send_arp(request_packet, interface)
+    arp_response = sync_send_arp(request_packet, interface, timeout)
     return arp_response
 
 
 async def arequest(
         interface: str,
         target_ip: str,
+        timeout: typing.Optional[float] = None
 ) -> ArpPacket:
     request_packet = build_arp_packet(interface, target_ip)
-    arp_response = await async_send_arp(request_packet, interface)
+    arp_response = await async_send_arp(request_packet, interface, timeout)
     return arp_response
