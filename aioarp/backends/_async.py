@@ -1,21 +1,25 @@
-import select
 import socket
 import typing
 
 import anyio
+import select
 from anyio.abc import AsyncResource
+from ._base import SocketInterface
 
 from aioarp import _exceptions as exc
 
-# TODO: add error map
 
-class AsyncSocket(AsyncResource):
+class AsyncStream(AsyncResource):
 
     def __init__(self,
-                 interface: str):
-        sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
-        sock.bind((interface, 0))
-        self.sock = sock
+                 interface: str,
+                 sock: typing.Optional[SocketInterface] = None
+                 ):
+        if sock:
+            self.sock = sock
+        else:
+            self.sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
+        self.sock.bind((interface, 0))
 
     async def receive_frame(self, timeout: float) -> bytes:
         frame: typing.Optional[bytes]
