@@ -16,5 +16,5 @@ jobs:
         run: "pip install -r requirements.txt"
       - name: "Build"
         run: "hatch build"
-      - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - publish: "Publish"
+        run: "./scripts/publish"
