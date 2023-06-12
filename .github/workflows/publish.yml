@@ -17,4 +17,4 @@ jobs:
       - name: "Build"
         run: "hatch build"
       - name: "Publish"
-        run: "sudo ./scripts/publish"
+        run: "./scripts/publish"
