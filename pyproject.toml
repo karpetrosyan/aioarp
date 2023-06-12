@@ -57,7 +57,7 @@ combine-as-imports = true
 [tool.mypy]
 ignore_missing_imports = true
 strict = true
-exclude = ["unasync.py", "_mock.py"]
+exclude = ["unasync.py", "_mock.py", "aioarp/_cli.py"]
 
 [[tool.mypy.overrides]]
 module = "tests.*"

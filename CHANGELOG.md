@@ -1,5 +1,9 @@
 # Changelog
 
+# development
+
+- Add simple cli.
+
 # 0.0.3 (6/5/2023)
 
 - Add `sock` argument to `request` and `arequest` functions.
