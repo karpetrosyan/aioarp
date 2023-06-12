@@ -7,6 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+
+    env:
+      AIOARP_PYPI: ${{ secrets.AIOARP_PYPI }}
+
     steps:
       - uses: "actions/checkout@v3"
       - uses: "actions/setup-python@v4"
