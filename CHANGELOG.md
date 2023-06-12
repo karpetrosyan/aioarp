@@ -1,10 +1,10 @@
 # Changelog
 
-# development
+# 0.0.5 (12/6/2023)
 
 - Add simple cli.
 
-# 0.0.3 (6/5/2023)
+# 0.0.3 (5/6/2023)
 
 - Add `sock` argument to `request` and `arequest` functions.
 - Add `timeout` argument to `request` and `arequest` functions.
