@@ -1,6 +1,14 @@
+try:
+    import typer
+except ImportError as e:
+    text = ("You are attempting to use aioarp cli without "
+            "installing the necessary dependencies; install "
+            "aioarp with all required cli dependencies using "
+            "this command `pip install aioarp[cli]`")
+    raise ImportError(text) from e
+
 import typing
 
-import typer
 from typing_extensions import Annotated
 
 import aioarp
