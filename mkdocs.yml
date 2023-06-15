@@ -3,7 +3,9 @@ site_name: AioARP
 theme: material
 repo_url: https://github.com/karosis88/aioarp
 nav:
-    - index.md
+    - Introduction: index.md
+    - Usage:
+        - Requests: client.md
 =======
 theme:
   name: material
