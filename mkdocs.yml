@@ -1,10 +1,4 @@
 site_name: AioARP
-<<<<<<< Updated upstream
-theme: material
-repo_url: https://github.com/karosis88/aioarp
-nav:
-    - index.md
-=======
 theme:
   name: material
   features:
@@ -23,4 +17,3 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
->>>>>>> Stashed changes
