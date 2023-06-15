@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-# Introduction
-=======
 # Introduction
 
 # aioarp
@@ -142,4 +139,3 @@ response = aioarp.request('enp0s3', '10.0.2.25')
 ```py title="With timeout" linenums="1"
 response = aioarp.request('enp0s3', '10.0.2.25', timeout=0.5)
 ```
->>>>>>> Stashed changes
