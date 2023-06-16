@@ -12,9 +12,8 @@
 **Table of Contents**
 
 - [Installation](#installation)
-- [ARP request](#ow-to-send-arp-requests)
+- [ARP request](#how-to-send-arp-requests)
 - [ARP response](#arp-response)
-- [License](#license)
 
 ## Installation
 

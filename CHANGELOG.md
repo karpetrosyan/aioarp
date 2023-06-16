@@ -1,5 +1,9 @@
 # Changelog
 
+# development
+
+- Add basic API documentation. (#7)
+
 # 0.0.5 (12/6/2023)
 
 - Add simple cli.
