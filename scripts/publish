@@ -1,7 +1,3 @@
 #! /bin/bash -ex
 
-git config --local user.email "kar.petrosyanpy@gmail.com"
-git config --local user.name "karosis88"
-
 hatch publish -u __token__ -a $AIOARP_PYPI
-mkdocs gh-deploy --force
