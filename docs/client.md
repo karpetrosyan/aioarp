@@ -46,3 +46,13 @@ Now that you have your arp packet with all of the required headers, you can ask 
 ```py
 aioarp.sync_send_arp(arp_packet, Stream("enp0s3"))
 ```
+
+If the `ArpPacket` is too complicated for you, you can use the `build_arp_packet` function to generate an `ArpPacket` for you, which you can then modify.
+
+```py title="build_arp_packet"
+arp_packet = build_arp_packet('enp0s3', '10.0.2.2')
+arp_packet.sender_ip
+'10.0.2.2' 
+```
+
+`build_arp_packet` accepts only two arguments: interface and target IP address.
