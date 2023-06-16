@@ -1,6 +1,6 @@
 # Changelog
 
-# development
+# 0.0.7 (16/6/2023)
 
 - Add basic API documentation. (#7)
 
