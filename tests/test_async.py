@@ -29,6 +29,7 @@ arp_header = (
 async def test_async_send_arp():
     msocket = MockSocket(eth_header_arp + arp_header)
     response = await aioarp.arequest('null', '100.100.100.100', sock=msocket)
+    assert response
     assert response.sender_mac == '11:11:11:11:11:11'
 
 
