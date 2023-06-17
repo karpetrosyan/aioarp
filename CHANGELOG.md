@@ -1,5 +1,9 @@
 # Changelog
 
+# development
+
+- Add `wait_response` argument to `sync_send_arp` and `async_send_arp`. (#13)
+
 # 0.0.7 (16/6/2023)
 
 - Add basic API documentation. (#7)
