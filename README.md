@@ -33,7 +33,7 @@ print(response.sender_mac)
 # ee:xx:aa:mm:pp:le mac address
 ```
 
-### Async
+### Async [trio or asyncio]
 ```py
 import trio
 import aioarp
