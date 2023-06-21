@@ -15,6 +15,16 @@ You can also use a `timeout` to ensure that waiting for a response does not go o
 aioarp.request("enp0s3", "10.0.2.2", timeout=0.5)
 ```
 
+You can also use the `wait_response` parameter to tell aioarp whether you need the response or not.
+```py title="without waiting for a response"
+aioarp.request("enp0s3", "10.0.2.2", wait_response=False)
+```
+
+!!! note
+
+    When the `wait_response` argument is false, the `timeout` argument has no effect.
+
+
 This method can also take the `sock` argument, which is a socket connection that will be used for IO operations. (useful for mocking)
 
 ## Asynchronous requests

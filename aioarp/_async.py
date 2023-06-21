@@ -3,10 +3,9 @@ import typing
 
 from aioarp import _exceptions as exc
 from aioarp._arp import ARP_HEADER_SIZE, ETHERNET_HEADER_SIZE, ArpPacket, EthPacket, Protocol
+from aioarp._backends import AsyncStream
 from aioarp._utils import is_valid_ipv4
 from aioarp.defaults import DEFAULT_READ_TIMEOUT, DEFAULT_REPLY_MISSING_TIME, DEFAULT_WRITE_TIMEOUT
-
-from ._backends._async import AsyncStream
 
 __all__ = (
     'async_send_arp',
@@ -46,7 +45,8 @@ async def receive_arp(sock: AsyncStream, timeout: float) -> ArpPacket:
 
 async def async_send_arp(arp_packet: ArpPacket,
                          stream: AsyncStream,
-                         timeout: typing.Optional[float] = None) -> ArpPacket:
+                         timeout: typing.Optional[float] = None,
+                         wait_response: bool = True) -> typing.Optional[ArpPacket]:
     ethernet_packet = EthPacket(
         target_mac=arp_packet.target_mac,
         sender_mac=arp_packet.sender_mac,
@@ -58,5 +58,7 @@ async def async_send_arp(arp_packet: ArpPacket,
         await stream.write_frame(frame_to_send, timeout=DEFAULT_WRITE_TIMEOUT)
     except exc.WriteTimeoutError as e:  # pragma: no cover
         raise exc.NotFoundError from e
-
-    return await receive_arp(stream, timeout or DEFAULT_REPLY_MISSING_TIME)
+    
+    if wait_response:
+        return await receive_arp(stream, timeout or DEFAULT_REPLY_MISSING_TIME)
+    return None  # pragma: no cover
