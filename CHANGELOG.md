@@ -1,6 +1,6 @@
 # Changelog
 
-# development
+# 0.0.8 (21/6/2023) 
 
 - Add `wait_response` argument to `sync_send_arp` and `async_send_arp`. (#13)
 
