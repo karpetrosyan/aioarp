@@ -1,6 +1,11 @@
 name: publish
 on: workflow_dispatch
 
+permissions:
+  pull-requests: write
+  issues: write
+  repository-projects: write
+
 jobs:
   pypi-publish:
     name: upload release to PyPI
