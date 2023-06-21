@@ -34,13 +34,15 @@ def main(
         except PermissionError:
             text = "To send ARP requests, you must run a script with root privileges."
             print(text)
-            return
+            return typer.Exit()
         ans = response.sender_mac
         text = f"The mac address of IP '{target_ip}' is: {ans}"
         print(text)
+        return typer.Exit()
     except aioarp.NotFoundError:
         text = f"The IP address {target_ip}' did not respond to our ARP request."
         print(text)
+        return typer.Exit(1)
 
 
 if __name__ == "__main__":
