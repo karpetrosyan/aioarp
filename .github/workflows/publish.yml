@@ -10,8 +10,6 @@ jobs:
   pypi-publish:
     name: upload release to PyPI
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
 
     env:
       AIOARP_PYPI: ${{ secrets.AIOARP_PYPI }}
