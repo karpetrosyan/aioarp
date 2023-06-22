@@ -39,9 +39,10 @@ cli = [
 aioarp = "aioarp._cli:app"
 
 [project.urls]
-Documentation = "https://github.com/karosis88/aioarp#readme"
-Issues = "https://github.com/karosis88/aioarp/issues"
 Source = "https://github.com/karosis88/aioarp"
+Documentation = "https://karosis88.github.io/aioarp/"
+Changelog = "https://github.com/karosis88/aioarp/blob/master/CHANGELOG.md"
+Issues = "https://github.com/karosis88/aioarp/issues"
 
 [tool.hatch.version]
 path = "aioarp/__about__.py"
