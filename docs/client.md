@@ -15,6 +15,19 @@ You can also use a `timeout` to ensure that waiting for a response does not go o
 aioarp.request("10.0.2.2", "enp0s3", timeout=0.5)
 ```
 
+This function accepts the network interface that will be used to send the ARP request as the second argument.
+However, interface is an optional parameter that can be ignored. if it is not passed, aioarp will look up your system's default interface and use it.
+
+Example:
+
+```py title="without specifying interface"
+aioarp.request("10.0.2.2")
+```
+
+!!! note
+
+    If the default network interface is not specified, Aioarp will use the `ip` command to find it.
+
 You can also use the `wait_response` parameter to tell aioarp whether you need the response or not.
 ```py title="without waiting for a response"
 aioarp.request("10.0.2.2", "enp0s3", wait_response=False)
@@ -23,7 +36,6 @@ aioarp.request("10.0.2.2", "enp0s3", wait_response=False)
 !!! note
 
     When the `wait_response` argument is false, the `timeout` argument has no effect.
-
 
 This method can also take the `sock` argument, which is a socket connection that will be used for IO operations. (useful for mocking)
 
