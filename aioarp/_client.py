@@ -18,8 +18,8 @@ __all__ = (
 
 
 def build_arp_packet(
+        target_ip: str,
         interface: str,
-        target_ip: str
 ) -> ArpPacket:
     if not is_valid_ipv4(target_ip):
         raise aioarp.InvalidIpError("Invalid IPv4 Address was received")
@@ -44,32 +44,36 @@ def build_arp_packet(
 
 
 def request(
-        interface: str,
         target_ip: str,
+        interface: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         sock: typing.Optional[SocketInterface] = None,
         wait_response: bool = True
 ) -> typing.Optional[ArpPacket]:
+    if interface is None:  # pragma: no cover
+        interface = aioarp.get_default_interface()
     if not sock:  # pragma: no cover
         sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
     with Stream(interface=interface,
                     sock=sock) as stream:
-        request_packet = build_arp_packet(interface, target_ip)
+        request_packet = build_arp_packet(target_ip, interface)
         arp_response = sync_send_arp(request_packet, stream, timeout, wait_response)
         return arp_response
 
 
 async def arequest(
-        interface: str,
         target_ip: str,
+        interface: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         sock: typing.Optional[SocketInterface] = None,
         wait_response: bool = True
 ) -> typing.Optional[ArpPacket]:
+    if interface is None:  # pragma: no cover
+        interface = aioarp.get_default_interface()
     if not sock:  # pragma: no cover
         sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
     with AsyncStream(interface=interface,
                     sock=sock) as stream:
-        request_packet = build_arp_packet(interface, target_ip)
+        request_packet = build_arp_packet(target_ip, interface)
         arp_response = await async_send_arp(request_packet, stream, timeout, wait_response)
         return arp_response

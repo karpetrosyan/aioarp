@@ -25,7 +25,7 @@ pip install aioarp
 
 ```py title="Sync" linenums="1" 
 import aioarp
-response = aioarp.request('enp0s3', '10.0.2.2')
+response = aioarp.request('10.0.2.2', 'enp0s3')
 print(response.sender_mac)
 ee:xx:aa:mm:pp:le  # mac address
 ```
@@ -33,13 +33,13 @@ ee:xx:aa:mm:pp:le  # mac address
 ```py title="trio" linenums="1"
 import trio
 import aioarp
-response = trio.run(aioarp.arequest, 'enp0s3', '10.0.2.2')
+response = trio.run(aioarp.arequest, '10.0.2.2', 'enp0s3')
 ```
 
 ```py title="asyncio" linenums="1"
 import asyncio
 import aioarp
-response = asyncio.run(aioarp.arequest('enp0s3', '10.0.2.2'))
+response = asyncio.run(aioarp.arequest('10.0.2.2', 'enp0s3'))
 ```
 
 This is the packet that was sent over the network.
@@ -105,7 +105,7 @@ Let's try again with another arp request and see what we can do with the respone
 
 ```py linenums="1"
 import aioarp
-response = aioarp.request('enp0s3', '10.0.2.2')
+response = aioarp.request('10.0.2.2', 'enp0s3')
 # The `sender_mac` header for arp responses, as we know, 
 # indicates the actual answer to our question "Who has 10.0.2.2?" 
 # That is the protocol implementation; 
@@ -132,9 +132,9 @@ If the response is not received, aioarp should throw a `aioarp.NotFoundError` ex
 This occurs when the default arp request `timeout expires`. The timeout is set to 5 by default, but it can be changed by passing the `timeout` argument to the `request` function.
 
 ```py title="Without timeout" linenums="1"
-response = aioarp.request('enp0s3', '10.0.2.25')
+response = aioarp.request('10.0.2.25', 'enp0s3')
 ```
 
 ```py title="With timeout" linenums="1"
-response = aioarp.request('enp0s3', '10.0.2.25', timeout=0.5)
+response = aioarp.request('10.0.2.25', 'enp0s3', timeout=0.5)
 ```

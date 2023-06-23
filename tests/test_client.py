@@ -7,11 +7,11 @@ from aioarp import HardwareType, Protocol, build_arp_packet
 
 def test_invalid_ip():
     with pytest.raises(aioarp.InvalidIpError):
-        aioarp.build_arp_packet('test', '10.10.10.10.10')
+        aioarp.build_arp_packet('10.10.10.10.10', 'test')
 
 
 def test_build_packet(monkeypatch):
-    packet = build_arp_packet('test', '192.168.0.85')
+    packet = build_arp_packet('192.168.0.85', 'test')
 
     assert packet.sender_mac == '11:11:11:11:11:11'
     assert packet.sender_ip == '127.0.0.1'

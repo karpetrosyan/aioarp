@@ -5,19 +5,19 @@
 ```py title="request"
 import aioarp
 
-aioarp.request("enp0s3", "10.0.2.2")
+aioarp.request("10.0.2.2", "enp0s3")
 ```
 
 This is simply sending the arp packet that searches the network for a mac address of the `10.0.2.2` ip using the interface that you provided.
 You can also use a `timeout` to ensure that waiting for a response does not go on indefinitely.
 
 ```py title="timeout request"
-aioarp.request("enp0s3", "10.0.2.2", timeout=0.5)
+aioarp.request("10.0.2.2", "enp0s3", timeout=0.5)
 ```
 
 You can also use the `wait_response` parameter to tell aioarp whether you need the response or not.
 ```py title="without waiting for a response"
-aioarp.request("enp0s3", "10.0.2.2", wait_response=False)
+aioarp.request("10.0.2.2", "enp0s3", wait_response=False)
 ```
 
 !!! note
@@ -32,7 +32,7 @@ This method can also take the `sock` argument, which is a socket connection that
 It is very simple to switch from synchronous to asynchronous aioarp; simply use the await keyword and change request to arequest.
 
 ```py title="async request"
-await arequest("enp0s3", "10.0.2.2")
+await arequest("10.0.2.2", "enp0s3")
 ```
 
 Because the synchronous and asynchronous interfaces shared the same function signatures, all synchronous features worked as expected in asynchronous.
@@ -60,7 +60,7 @@ aioarp.sync_send_arp(arp_packet, Stream("enp0s3"))
 If the `ArpPacket` is too complicated for you, you can use the `build_arp_packet` function to generate an `ArpPacket` for you, which you can then modify.
 
 ```py title="build_arp_packet"
-arp_packet = build_arp_packet('enp0s3', '10.0.2.2')
+arp_packet = build_arp_packet('10.0.2.2', 'enp0s3')
 arp_packet.sender_ip
 '10.0.2.2' 
 ```

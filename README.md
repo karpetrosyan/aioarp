@@ -28,7 +28,7 @@ pip install aioarp
 ### Sync
 ```py
 import aioarp
-response = aioarp.request('enp0s3', '10.0.2.2')
+response = aioarp.request('10.0.2.2', 'enp0s3')
 print(response.sender_mac)
 # ee:xx:aa:mm:pp:le mac address
 ```
@@ -37,13 +37,13 @@ print(response.sender_mac)
 ```py
 import trio
 import aioarp
-response = trio.run(aioarp.arequest, 'enp0s3', '10.0.2.2')
+response = trio.run(aioarp.arequest, '10.0.2.2', 'enp0s3')
 ```
 
 ```py
 import asyncio
 import aioarp
-response = asyncio.run(aioarp.arequest('enp0s3', '10.0.2.2'))
+response = asyncio.run(aioarp.arequest('10.0.2.2', 'enp0s3'))
 ```
 
 ## License

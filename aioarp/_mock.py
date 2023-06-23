@@ -1,7 +1,7 @@
 import typing
 from functools import wraps
 
-from aioarp import get_ip, get_mac
+from aioarp import get_default_interface, get_ip, get_mac
 
 
 def mock_get_ip(ip: str) -> typing.Callable[[], str]:
@@ -17,4 +17,11 @@ def mock_get_mac(mac: str) -> typing.Callable[[str], str]:
     def inner(interface: str) -> str:
         return mac
 
+    return inner
+
+
+def mock_get_default_interface(interface: str) -> typing.Callable[[], str]:
+    @wraps(get_default_interface)
+    def inner() -> str:
+        return interface
     return inner
