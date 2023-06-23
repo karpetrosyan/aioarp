@@ -28,7 +28,7 @@ arp_header = (
 @pytest.mark.anyio
 async def test_async_send_arp():
     msocket = MockSocket(eth_header_arp + arp_header)
-    response = await aioarp.arequest('null', '100.100.100.100', sock=msocket)
+    response = await aioarp.arequest('100.100.100.100', 'null', sock=msocket)
     assert response
     assert response.sender_mac == '11:11:11:11:11:11'
 
@@ -37,4 +37,4 @@ async def test_async_send_arp():
 async def test_async_send_arp_timeout():
     with MockSocket(eth_header_no_arp + arp_header) as msocket:
         with pytest.raises(aioarp.NotFoundError):
-            await aioarp.arequest('null', '100.100.100.100', sock=msocket, timeout=0.5)
+            await aioarp.arequest('100.100.100.100', 'null',  sock=msocket, timeout=0.5)

@@ -2,12 +2,14 @@ import fcntl
 import ipaddress
 import socket
 import struct
+import subprocess
 import typing
 
 __all__ = (
     'is_valid_ipv4',
     'get_mac',
     'get_ip',
+    'get_default_interface',
     'enforce_mac',
     'enforce_ip',
     'parse_mac',
@@ -16,6 +18,7 @@ __all__ = (
 
 OUR_MAC = None
 OUR_IP = None
+OUR_INTERFACE = None
 
 
 def is_valid_ipv4(ip: str) -> bool:
@@ -62,6 +65,17 @@ def enforce_ip(ip: str) -> bytes:
     return bytes(ip_bytes)
 
 
+def get_default_interface() -> str:  # pragma: no cover
+    global OUR_INTERFACE
+    if OUR_INTERFACE:
+        return OUR_INTERFACE
+    output = subprocess.check_output(['ip', 'route', 'list']).decode().split()
+    for ind, word in enumerate(output):
+        if word == 'dev':
+            OUR_INTERFACE = output[ind + 1]
+            return OUR_INTERFACE
+    raise RuntimeError('Could not find default interface')    
+        
 def parse_mac(mac: bytes) -> str:
     mac_parts = []
     for b in mac:
