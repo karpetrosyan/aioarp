@@ -7,7 +7,8 @@ SUBS = [
     ('AsyncStream', 'Stream'),
     ('await ', ''),
     ('async_send_arp', 'sync_send_arp'),
-    ('aioarp.arequest', 'aioarp.request')
+    ('aioarp.arequest', 'aioarp.request'),
+    ("async with", "with")
 ]
 
 COMPILED_SUBS = [
