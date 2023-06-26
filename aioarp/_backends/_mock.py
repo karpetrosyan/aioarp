@@ -23,8 +23,9 @@ class MockSocket:
         return self._to_receive
 
     def bind(self, address: typing.Union[_Address, bytes]) -> None: ...
-    def settimeout(self, value: typing.Union[float, None]) -> None: ...
 
+    def settimeout(self, value: typing.Union[float, None]) -> None: ...
+    
     def fileno(self) -> int:
         return self._file.fileno()
 

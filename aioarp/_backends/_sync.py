@@ -35,8 +35,20 @@ class Stream:
         except socket.timeout:  # pragma: no cover
             raise exc.WriteTimeoutError()
 
-    def __enter__(self) -> 'Stream':
+    def close(self) -> None:
+        self.sock.close()
+
+    def __enter__(self) -> "Stream":
+        return self
+    
+    def __exit__(self, exc_type: typing.Any, exc_val: typing.Any, exc_tb: typing.Any) -> None:
+        self.close()
+
+    async def __aenter__(self) -> "Stream":  # pragma: no cover
         return self
 
-    def __exit__(self, exc_type: typing.Any, exc_val: typing.Any, exc_tb: typing.Any) -> None:
-        self.sock.close()
+    async def __aexit__(self, 
+                        exc_type: typing.Any, 
+                        exc_val: typing.Any, 
+                        exc_tb: typing.Any) -> None:  # pragma: no cover
+        self.close()

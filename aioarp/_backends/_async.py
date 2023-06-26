@@ -53,8 +53,14 @@ class AsyncStream:
     def close(self) -> None:
         self.sock.close()
 
-    def __enter__(self) -> "AsyncStream":
+    def __enter__(self) -> "AsyncStream":  # pragma: no cover
+        return self
+    
+    def __exit__(self) -> None:  # pragma: no cover
+        self.close()
+
+    async def __aenter__(self) -> "AsyncStream":
         return self
 
-    def __exit__(self, exc_type: typing.Any, exc_val: typing.Any, exc_tb: typing.Any) -> None:
+    async def __aexit__(self, exc_type: typing.Any, exc_val: typing.Any, exc_tb: typing.Any) -> None:
         self.close()

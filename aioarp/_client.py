@@ -72,7 +72,7 @@ async def arequest(
         interface = aioarp.get_default_interface()
     if not sock:  # pragma: no cover
         sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
-    with AsyncStream(interface=interface,
+    async with AsyncStream(interface=interface,
                     sock=sock) as stream:
         request_packet = build_arp_packet(target_ip, interface)
         arp_response = await async_send_arp(request_packet, stream, timeout, wait_response)
