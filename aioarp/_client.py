@@ -2,11 +2,15 @@ import typing
 
 import aioarp
 
-from ._arp import ArpPacket, HardwareType, Protocol
+from ._arp import ArpPacket
+from ._arp import HardwareType
+from ._arp import Protocol
 from ._async import async_send_arp
 from ._backends._base import SocketInterface
 from ._sync import sync_send_arp
-from ._utils import get_ip, get_mac, is_valid_ipv4
+from ._utils import get_ip
+from ._utils import get_mac
+from ._utils import is_valid_ipv4
 
 __all__ = (
     'build_arp_packet',

@@ -2,7 +2,10 @@ import struct
 import typing
 from enum import Enum
 
-from aioarp._utils import enforce_ip, enforce_mac, parse_ip, parse_mac
+from aioarp._utils import enforce_ip
+from aioarp._utils import enforce_mac
+from aioarp._utils import parse_ip
+from aioarp._utils import parse_mac
 
 ETHERNET_HEADER_SIZE = 14
 ARP_HEADER_SIZE = 28

@@ -3,11 +3,18 @@ import time
 import typing
 
 from aioarp import _exceptions as exc
-from aioarp._arp import ARP_HEADER_SIZE, ETHERNET_HEADER_SIZE, ArpPacket, EthPacket, Protocol
+from aioarp._arp import ARP_HEADER_SIZE
+from aioarp._arp import ETHERNET_HEADER_SIZE
+from aioarp._arp import ArpPacket
+from aioarp._arp import EthPacket
+from aioarp._arp import Protocol
 from aioarp._backends import AsyncStream
 from aioarp._backends._base import SocketInterface
-from aioarp._utils import get_default_interface, is_valid_ipv4
-from aioarp.defaults import DEFAULT_READ_TIMEOUT, DEFAULT_REPLY_MISSING_TIME, DEFAULT_WRITE_TIMEOUT
+from aioarp._utils import get_default_interface
+from aioarp._utils import is_valid_ipv4
+from aioarp.defaults import DEFAULT_READ_TIMEOUT
+from aioarp.defaults import DEFAULT_REPLY_MISSING_TIME
+from aioarp.defaults import DEFAULT_WRITE_TIMEOUT
 
 __all__ = (
     'async_send_arp',
