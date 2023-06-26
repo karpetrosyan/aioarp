@@ -1,6 +1,7 @@
 import typing
 
-from typing_extensions import Protocol, TypeAlias
+from typing_extensions import Protocol
+from typing_extensions import TypeAlias
 
 _Address: TypeAlias = typing.Tuple[typing.Any, ...]
 

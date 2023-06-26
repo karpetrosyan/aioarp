@@ -2,8 +2,9 @@
 import pytest
 
 import aioarp
-from aioarp import HardwareType, Protocol, build_arp_packet
-
+from aioarp import HardwareType
+from aioarp import Protocol
+from aioarp import build_arp_packet
 
 def test_invalid_ip():
     with pytest.raises(aioarp.InvalidIpError):

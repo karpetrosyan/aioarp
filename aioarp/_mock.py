@@ -1,8 +1,9 @@
 import typing
 from functools import wraps
 
-from aioarp import get_default_interface, get_ip, get_mac
-
+from aioarp import get_default_interface
+from aioarp import get_ip
+from aioarp import get_mac
 
 def mock_get_ip(ip: str) -> typing.Callable[[], str]:
     @wraps(get_ip)

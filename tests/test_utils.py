@@ -1,6 +1,5 @@
 import aioarp
 
-
 def test_enforce_mac():
     encoded = aioarp.enforce_mac('00:00:00:00:00:00')
     assert False not in [byte == 0 for byte in encoded]

@@ -1,5 +1,8 @@
-from aioarp import ArpPacket, EthPacket, HardwareType, Opcode, Protocol
-
+from aioarp import ArpPacket
+from aioarp import EthPacket
+from aioarp import HardwareType
+from aioarp import Opcode
+from aioarp import Protocol
 
 class TestEth:
 
