@@ -1,18 +1,16 @@
-import socket
 import typing
 
 import aioarp
-from aioarp._arp import ArpPacket
-from aioarp._arp import HardwareType
-from aioarp._arp import Protocol
-from aioarp._async import async_send_arp
-from aioarp._backends._async import AsyncStream
-from aioarp._backends._base import SocketInterface
-from aioarp._backends._sync import Stream
-from aioarp._sync import sync_send_arp
-from aioarp._utils import get_ip
-from aioarp._utils import get_mac
-from aioarp._utils import is_valid_ipv4
+
+from ._arp import ArpPacket
+from ._arp import HardwareType
+from ._arp import Protocol
+from ._async import async_send_arp
+from ._backends._base import SocketInterface
+from ._sync import sync_send_arp
+from ._utils import get_ip
+from ._utils import get_mac
+from ._utils import is_valid_ipv4
 
 __all__ = (
     'build_arp_packet',
@@ -50,34 +48,26 @@ def build_arp_packet(
 def request(
         target_ip: str,
         interface: typing.Optional[str] = None,
-        timeout: typing.Optional[float] = None,
         sock: typing.Optional[SocketInterface] = None,
+        timeout: typing.Optional[float] = None,
         wait_response: bool = True
 ) -> typing.Optional[ArpPacket]:
     if interface is None:  # pragma: no cover
         interface = aioarp.get_default_interface()
-    if not sock:  # pragma: no cover
-        sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
-    with Stream(interface=interface,
-                    sock=sock) as stream:
-        request_packet = build_arp_packet(target_ip, interface)
-        arp_response = sync_send_arp(request_packet, stream, timeout, wait_response)
-        return arp_response
+    request_packet = build_arp_packet(target_ip, interface)
+    arp_response = sync_send_arp(request_packet, sock, interface, timeout, wait_response)
+    return arp_response
 
 
 async def arequest(
         target_ip: str,
         interface: typing.Optional[str] = None,
-        timeout: typing.Optional[float] = None,
         sock: typing.Optional[SocketInterface] = None,
+        timeout: typing.Optional[float] = None,
         wait_response: bool = True
 ) -> typing.Optional[ArpPacket]:
     if interface is None:  # pragma: no cover
         interface = aioarp.get_default_interface()
-    if not sock:  # pragma: no cover
-        sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
-    async with AsyncStream(interface=interface,
-                    sock=sock) as stream:
-        request_packet = build_arp_packet(target_ip, interface)
-        arp_response = await async_send_arp(request_packet, stream, timeout, wait_response)
-        return arp_response
+    request_packet = build_arp_packet(target_ip, interface)
+    arp_response = await async_send_arp(request_packet, sock, interface, timeout, wait_response)
+    return arp_response

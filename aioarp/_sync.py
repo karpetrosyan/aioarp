@@ -1,3 +1,4 @@
+import socket
 import time
 import typing
 
@@ -8,6 +9,8 @@ from aioarp._arp import ArpPacket
 from aioarp._arp import EthPacket
 from aioarp._arp import Protocol
 from aioarp._backends import Stream
+from aioarp._backends._base import SocketInterface
+from aioarp._utils import get_default_interface
 from aioarp._utils import is_valid_ipv4
 from aioarp.defaults import DEFAULT_READ_TIMEOUT
 from aioarp.defaults import DEFAULT_REPLY_MISSING_TIME
@@ -50,7 +53,8 @@ def receive_arp(sock: Stream, timeout: float) -> ArpPacket:
 
 
 def sync_send_arp(arp_packet: ArpPacket,
-                         stream: Stream,
+                         sock: typing.Optional[SocketInterface] = None,
+                         interface: typing.Optional[str] = None,
                          timeout: typing.Optional[float] = None,
                          wait_response: bool = True) -> typing.Optional[ArpPacket]:
     ethernet_packet = EthPacket(
@@ -58,13 +62,18 @@ def sync_send_arp(arp_packet: ArpPacket,
         sender_mac=arp_packet.sender_mac,
         proto=Protocol.arp
     )
-
-    try:
-        frame_to_send = ethernet_packet.build_frame() + arp_packet.build_frame()
-        stream.write_frame(frame_to_send, timeout=DEFAULT_WRITE_TIMEOUT)
-    except exc.WriteTimeoutError as e:  # pragma: no cover
-        raise exc.NotFoundError from e
-    
-    if wait_response:
-        return receive_arp(stream, timeout or DEFAULT_REPLY_MISSING_TIME)
-    return None  # pragma: no cover
+    if interface is None:  # pragma: no cover
+        interface = get_default_interface()
+    if not sock:  # pragma: no cover
+        sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
+    with Stream(interface=interface,
+                    sock=sock) as stream:
+        try:
+            frame_to_send = ethernet_packet.build_frame() + arp_packet.build_frame()
+            stream.write_frame(frame_to_send, timeout=DEFAULT_WRITE_TIMEOUT)
+        except exc.WriteTimeoutError as e:  # pragma: no cover
+            raise exc.NotFoundError from e
+        
+        if wait_response:
+            return receive_arp(stream, timeout or DEFAULT_REPLY_MISSING_TIME)
+        return None  # pragma: no cover

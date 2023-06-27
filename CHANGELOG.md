@@ -3,6 +3,7 @@
 # development
 
 - Make `interface` argument optional. (#23)
+- Move `Stream` creation from `request` to `sync_send_arp`. (#24)
 
 # 0.0.8 (21/6/2023) 
 
