@@ -73,7 +73,7 @@ arp_packet = aioarp.ArpPacket(
     target_mac='11:11:11:11:11:11',
     target_ip='127.0.0.1')
 
-response = aioarp.sync_send_arp(arp_packet, aioarp.Stream('enp0s3'))
+response = aioarp.sync_send_arp(arp_packet)
 ```
 
 This sends the same ARP request as your `ArpPacket` instance.
