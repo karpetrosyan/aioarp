@@ -66,7 +66,7 @@ arp_packet = aioarp.ArpPacket(
 Now that you have your arp packet with all of the required headers, you can ask `aioarp` to send that request.
 
 ```py
-aioarp.sync_send_arp(arp_packet, Stream("enp0s3"))
+aioarp.sync_send_arp(arp_packet, "enp0s3")
 ```
 
 If the `ArpPacket` is too complicated for you, you can use the `build_arp_packet` function to generate an `ArpPacket` for you, which you can then modify.
