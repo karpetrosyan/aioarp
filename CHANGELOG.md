@@ -1,5 +1,9 @@
 # Changelog
 
+## development
+
+- Add `Packet` base class. (#28)
+
 # 0.0.9 (27/6/2023)
 
 - Make `interface` argument optional. (#23)
