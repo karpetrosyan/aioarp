@@ -1,3 +1,4 @@
-#! /bin/bash -e
+#! /bin/bash -ex
 
 ruff --fix .
+python unasync.py
