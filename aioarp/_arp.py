@@ -35,7 +35,16 @@ class Opcode(Enum):
     response = 2
 
 
-class EthPacket:
+class Packet:
+
+    @classmethod
+    def parse(self, frame: bytes) -> "Packet":
+        raise NotImplementedError()
+    
+    def build_frame(self) -> bytes:
+        raise NotImplementedError()
+
+class EthPacket(Packet):
     format = "!6s6sH"
 
     def __init__(self,
