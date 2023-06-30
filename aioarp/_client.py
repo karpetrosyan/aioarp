@@ -4,7 +4,7 @@ import aioarp
 
 from ._arp import ArpPacket
 from ._arp import HardwareType
-from ._arp import Protocol
+from ._arp import ProtocolType
 from ._async import async_send_arp
 from ._backends._base import SocketInterface
 from ._sync import sync_send_arp
@@ -27,7 +27,7 @@ def build_arp_packet(
         raise aioarp.InvalidIpError("Invalid IPv4 Address was received")
 
     hardware_type = HardwareType.ethernet
-    protocol_type = Protocol.ip
+    protocol_type = ProtocolType.ip
 
     # TODO: catch interface not found error
     sender_mac = get_mac(interface)
