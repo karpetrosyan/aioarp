@@ -14,7 +14,7 @@ __all__ = (
     'ETHERNET_HEADER_SIZE',
     'ARP_HEADER_SIZE',
     'HardwareType',
-    'Protocol',
+    'ProtocolType',
     'Opcode',
     'EthPacket',
     'ArpPacket',
@@ -25,7 +25,7 @@ class HardwareType(Enum):
     ethernet = 1
 
 
-class Protocol(Enum):
+class ProtocolType(Enum):
     ip = 0x0800
     arp = 0x0806
 
@@ -50,7 +50,7 @@ class EthPacket(Packet):
     def __init__(self,
                  target_mac: str,
                  sender_mac: str,
-                 proto: Protocol):
+                 proto: ProtocolType):
         self.target_mac = target_mac
         self.sender_mac = sender_mac
         self.proto = proto
@@ -64,7 +64,7 @@ class EthPacket(Packet):
         return cls(
             target_mac=parse_mac(target_mac),
             sender_mac=parse_mac(sender_mac),
-            proto=Protocol(proto)
+            proto=ProtocolType(proto)
         )
 
     def build_frame(self) -> bytes:
@@ -83,7 +83,7 @@ class ArpPacket:
 
     def __init__(self,
                  hardware_type: HardwareType,
-                 protocol_type: Protocol,
+                 protocol_type: ProtocolType,
                  sender_mac: str,
                  sender_ip: str,
                  target_mac: str,
@@ -138,7 +138,7 @@ class ArpPacket:
         )
         return cls(
             hardware_type=HardwareType(hardware_type),
-            protocol_type=Protocol(protocol_type),
+            protocol_type=ProtocolType(protocol_type),
             opcode=Opcode(opcode),
             sender_mac=parse_mac(sender_mac),
             sender_ip=parse_ip(sender_ip),
@@ -179,8 +179,8 @@ class ArpPacket:
         return f"<ArpPacket target_ip={self.target_ip}>"
 
 
-def size_of(type: typing.Union[HardwareType, Protocol]) -> int:
-    if type is Protocol.ip:
+def size_of(type: typing.Union[HardwareType, ProtocolType]) -> int:
+    if type is ProtocolType.ip:
         return 4
     elif type is HardwareType.ethernet:
         return 6

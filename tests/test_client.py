@@ -3,7 +3,7 @@ import pytest
 
 import aioarp
 from aioarp import HardwareType
-from aioarp import Protocol
+from aioarp import ProtocolType
 from aioarp import build_arp_packet
 
 def test_invalid_ip():
@@ -17,6 +17,6 @@ def test_build_packet(monkeypatch):
     assert packet.sender_mac == '11:11:11:11:11:11'
     assert packet.sender_ip == '127.0.0.1'
     assert packet.hardware_type == HardwareType.ethernet
-    assert packet.protocol_type == Protocol.ip
+    assert packet.protocol_type == ProtocolType.ip
     assert packet.target_mac == 'ff:ff:ff:ff:ff:ff'
     assert packet.target_ip == '192.168.0.85'

@@ -2,7 +2,7 @@ from aioarp import ArpPacket
 from aioarp import EthPacket
 from aioarp import HardwareType
 from aioarp import Opcode
-from aioarp import Protocol
+from aioarp import ProtocolType
 
 class TestEth:
 
@@ -15,13 +15,13 @@ class TestEth:
         eth_packet = EthPacket.parse(frame=eth_header)
         assert eth_packet.sender_mac == '11:11:11:11:11:11'
         assert eth_packet.target_mac == '11:11:11:11:11:11'
-        assert eth_packet.proto == Protocol.arp
+        assert eth_packet.proto == ProtocolType.arp
 
     def test_build(self):
         assert EthPacket(
             sender_mac='11:11:11:11:11:11',
             target_mac='11:11:11:11:11:11',
-            proto=Protocol.ip
+            proto=ProtocolType.ip
         ).build_frame() == (
                    b"\x11\x11\x11\x11\x11\x11\x11"
                    b"\x11\x11\x11\x11\x11\x08\x00"
@@ -40,7 +40,7 @@ class TestArp:
         )
         arp_packet = ArpPacket.parse(frame=arp_header)
         assert arp_packet.hardware_type == HardwareType.ethernet
-        assert arp_packet.protocol_type == Protocol.ip
+        assert arp_packet.protocol_type == ProtocolType.ip
         assert arp_packet.hardware_length == 6
         assert arp_packet.protocol_length == 4
         assert arp_packet.opcode == Opcode.request
@@ -52,7 +52,7 @@ class TestArp:
     def test_build(self):
         assert ArpPacket(
             hardware_type=HardwareType.ethernet,
-            protocol_type=Protocol.ip,
+            protocol_type=ProtocolType.ip,
             sender_mac='11:11:11:11:11:11',
             sender_ip='127.0.0.1',
             target_mac='11:11:11:11:11:11',

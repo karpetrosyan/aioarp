@@ -7,7 +7,7 @@ from aioarp._arp import ARP_HEADER_SIZE
 from aioarp._arp import ETHERNET_HEADER_SIZE
 from aioarp._arp import ArpPacket
 from aioarp._arp import EthPacket
-from aioarp._arp import Protocol
+from aioarp._arp import ProtocolType
 from aioarp._backends import AsyncStream
 from aioarp._backends._base import SocketInterface
 from aioarp._utils import get_default_interface
@@ -40,7 +40,7 @@ async def receive_arp(sock: AsyncStream, timeout: float) -> ArpPacket:
 
         try:
             eth_packet = EthPacket.parse(eth_header)
-            if eth_packet.proto != Protocol.arp:
+            if eth_packet.proto != ProtocolType.arp:
                 continue
 
             arp_response = ArpPacket.parse(
@@ -60,7 +60,7 @@ async def async_send_arp(arp_packet: ArpPacket,
     ethernet_packet = EthPacket(
         target_mac=arp_packet.target_mac,
         sender_mac=arp_packet.sender_mac,
-        proto=Protocol.arp
+        proto=ProtocolType.arp
     )
     if interface is None:  # pragma: no cover
         interface = get_default_interface()
