@@ -1,4 +1,4 @@
 #! /bin/bash -ex
 
 ruff .
-mypy .
+mypy tests aioarp
