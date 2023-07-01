@@ -5,6 +5,8 @@
 [![coverage](https://img.shields.io/codecov/c/github/karosis88/aioarp/master)](https://app.codecov.io/gh/karosis88/aioarp)
 ![license](https://img.shields.io/github/license/karosis88/aioarp)
 
+<span style='color: red'>WARNING</span>! This package contains functionality that can be used for evil purposes, so we recommend that you only use it for learning and improving the security of your application.
+
 -----
 
 **Table of Contents**
