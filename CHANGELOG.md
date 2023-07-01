@@ -3,6 +3,7 @@
 ## development
 
 - Use `getmac` package for mac address detecting.
+- Make the `interface` argument for the `build_arp_packet` function optional. (#32)
 
 ## 0.0.10 (1/7/2023)
 
