@@ -3,6 +3,7 @@
 ## development
 
 - Use `getmac` package for mac address detecting.
+- Add `send` and `disable` commands for the CLI. (#33)
 
 ## 0.0.10 (1/7/2023)
 

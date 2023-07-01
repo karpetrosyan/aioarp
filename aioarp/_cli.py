@@ -75,7 +75,8 @@ def disable(
     
     print(f"ARP poisoning has begun. [{datetime.datetime.now()}]")
     while True:
-        aioarp.sync_send_arp(arp_packet, wait_response=False)
+        
+        aioarp.sync_send_arp(arp_packet, interface=interface, wait_response=False, timeout=1)
         if time.time() - start_time > seconds:
             break
     print(f"The ARP poisoning has ended. [{datetime.datetime.now()}]")

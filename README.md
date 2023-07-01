@@ -25,6 +25,19 @@ pip install aioarp
 ## Documentation
 [Click here](https://karosis88.github.io/aioarp/)
 
+## Turn off internet access for the target ip (LOCALHOST).
+
+Using this command, you can disable internet access for any device on your local network.
+
+```shell
+$ aioarp disable 192.168.0.81 192.168.0.1 enp0s3 --seconds 10
+```
+Where...
+- `192.168.0.81` is a target IP address for which we are blocking internet access.
+- `192.168.0.1` is a gateway for our target IP address.
+- `enp0s3` is an optional interface used to send ARP requests. if not specified, the default interface is used.
+- `seconds` is an option that specifies how long we want to disable internet access for the target IP address.
+
 ## How to send ARP requests
 
 ### Sync
