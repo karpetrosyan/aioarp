@@ -4,6 +4,7 @@
 
 - Add `Packet` base class. (#28)
 - Change `Protocol` to `ProtocolType`. (#30)
+- Validate `sender_ip` of the ARP response packet.
 
 # 0.0.9 (27/6/2023)
 

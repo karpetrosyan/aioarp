@@ -21,7 +21,7 @@ __all__ = (
 )
 
 
-def receive_arp(sock: Stream, timeout: float) -> ArpPacket:
+def receive_arp(sock: Stream, target_ip: str, timeout: float) -> ArpPacket:
     start_time = time.time()
     while True:
 
@@ -43,8 +43,11 @@ def receive_arp(sock: Stream, timeout: float) -> ArpPacket:
             if eth_packet.proto != ProtocolType.arp:
                 continue
 
+
             arp_response = ArpPacket.parse(
                 frame[ETHERNET_HEADER_SIZE: ETHERNET_HEADER_SIZE + ARP_HEADER_SIZE])
+            if arp_response.sender_ip != target_ip:
+                continue
             if is_valid_ipv4(arp_response.sender_ip):
                 return arp_response
         except BaseException:  # pragma: no cover
@@ -75,5 +78,5 @@ def sync_send_arp(arp_packet: ArpPacket,
             raise exc.NotFoundError from e
         
         if wait_response:
-            return receive_arp(stream, timeout or DEFAULT_REPLY_MISSING_TIME)
+            return receive_arp(stream, arp_packet.target_ip, timeout or DEFAULT_REPLY_MISSING_TIME)
         return None  # pragma: no cover
