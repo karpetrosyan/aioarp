@@ -1,6 +1,6 @@
 # Changelog
 
-## development
+## 0.0.10 (1/7/2023)
 
 - Add `Packet` base class. (#28)
 - Change `Protocol` to `ProtocolType`. (#30)
