@@ -23,10 +23,12 @@ app = typer.Typer()
 @app.command()
 def send(
         target_ip: Annotated[str,
-        typer.Argument(help="Target IP, the IP address for which we are looking for a mac "
-                                                      "address.")],
+                             typer.Argument(
+                                help="Target IP, the IP address for "
+                                "which we are looking for a mac address.")],
         interface: Annotated[str,
-        typer.Argument(help="Network interface which should be used to send the arp packet.")] = None,
+                             typer.Argument(
+                                help="Network interface which should be used to send the arp packet.")] = None,
         timeout: Annotated[typing.Optional[int], typer.Option(help="Timeout for arp request.")] = None,
         wait_response: Annotated[bool,
                                  typer.Option(help="If you do not want to wait for a response, set False.")] = True
@@ -62,10 +64,11 @@ def disable(
         typer.Argument(help="Target IP address for which we want to disable internet access via ARP poisoning")],
     pretend_as: Annotated[str,
                           typer.Argument(
-    help="The IP address that we are pretending to be is used "
-    "to force the host to send traffic to you instead of this IP address.")],
+                            help="The IP address that we are pretending to be is used "
+                          "to force the host to send traffic to you instead of this IP address.")],
     interface: Annotated[str,
-        typer.Argument(help="Network interface which should be used to send the arp packet.")] = None,
+                          typer.Argument(
+                            help="Network interface which should be used to send the arp packet.")] = None,
     seconds: Annotated[int,
                        typer.Option(help="Specifies the length of time we"
                                     " want to disable internet access for this host.")] = 5
