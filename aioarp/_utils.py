@@ -29,7 +29,9 @@ def is_valid_ipv4(ip: str) -> bool:
         return False
 
 
-def get_mac(interface: str) -> str:  # pragma: no cover
+def get_mac(interface: typing.Optional[str] = None) -> str:  # pragma: no cover
+    if interface is None:
+        interface = get_default_interface()
     global OUR_MAC
     if OUR_MAC:
         return OUR_MAC
