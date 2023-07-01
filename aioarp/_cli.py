@@ -1,5 +1,6 @@
-import time
 import datetime
+import time
+
 try:
     import typer
 except ImportError as e:
@@ -35,9 +36,11 @@ def send(
             interface = interface or aioarp.get_default_interface()
 
             if wait_response:
-                print(f"Looking for {request_packet.target_ip} in {interface}[{request_packet.target_mac}]")
+                print(f"Looking for {request_packet.target_ip} in "
+                      "{interface}[{request_packet.target_mac}]")
             else:
-                print(f"ARP packet seeking {request_packet.target_ip} was sent in {interface}[{request_packet.target_mac}]")
+                print(f"ARP packet seeking {request_packet.target_ip}" 
+                      "was sent in {interface}[{request_packet.target_mac}]")
             arp_response = aioarp.sync_send_arp(request_packet, None, interface, timeout, wait_response)
 
             if wait_response:
@@ -58,11 +61,14 @@ def disable(
     target_ip: Annotated[str,
         typer.Argument(help="Target IP address for which we want to disable internet access via ARP poisoning")],
     pretend_as: Annotated[str,
-                          typer.Argument(help="The IP address that we are pretending to be is used to force the host to send traffic to you instead of this IP address.")],
+                          typer.Argument(
+    help="The IP address that we are pretending to be is used "
+    "to force the host to send traffic to you instead of this IP address.")],
     interface: Annotated[str,
         typer.Argument(help="Network interface which should be used to send the arp packet.")] = None,
     seconds: Annotated[int,
-                       typer.Option(help="Specifies the length of time we want to disable internet access for this host.")] = 5
+                       typer.Option(help="Specifies the length of time we"
+                                    " want to disable internet access for this host.")] = 5
 ):
     response = aioarp.request(target_ip, interface)
     arp_packet = aioarp.build_arp_packet(target_ip, interface)
