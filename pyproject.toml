@@ -26,7 +26,8 @@ classifiers = [
 ]
 dependencies = [
   "anyio==3.6.2",
-  "typing_extensions==4.6.3"
+  "typing_extensions==4.6.3",
+  "getmac==0.9.4"
 ]
 
 [project.optional-dependencies]
