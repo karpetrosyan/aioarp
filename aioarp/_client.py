@@ -21,8 +21,10 @@ __all__ = (
 
 def build_arp_packet(
         target_ip: str,
-        interface: str,
+        interface: typing.Optional[str] = None,
 ) -> ArpPacket:
+    if interface is None:
+        interface = aioarp.get_default_interface()
     if not is_valid_ipv4(target_ip):
         raise aioarp.InvalidIpError("Invalid IPv4 Address was received")
 
@@ -52,8 +54,6 @@ def request(
         timeout: typing.Optional[float] = None,
         wait_response: bool = True
 ) -> typing.Optional[ArpPacket]:
-    if interface is None:  # pragma: no cover
-        interface = aioarp.get_default_interface()
     request_packet = build_arp_packet(target_ip, interface)
     arp_response = sync_send_arp(request_packet, sock, interface, timeout, wait_response)
     return arp_response
@@ -66,8 +66,6 @@ async def arequest(
         timeout: typing.Optional[float] = None,
         wait_response: bool = True
 ) -> typing.Optional[ArpPacket]:
-    if interface is None:  # pragma: no cover
-        interface = aioarp.get_default_interface()
     request_packet = build_arp_packet(target_ip, interface)
     arp_response = await async_send_arp(request_packet, sock, interface, timeout, wait_response)
     return arp_response
