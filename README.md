@@ -11,7 +11,7 @@
 
 - [Installation](#installation)
 - [Documentation](#documentation)
-- [ARP Spoofing] (#arp-spoofing)
+- [ARP Spoofing](#arp-spoofing)
 - [ARP requests](#how-to-send-arp-requests)
 - [License](#license)
 
