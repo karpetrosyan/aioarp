@@ -15,7 +15,7 @@ def mock_get_ip(ip: str) -> typing.Callable[[], str]:
 
 def mock_get_mac(mac: str) -> typing.Callable[[str], str]:
     @wraps(get_mac)
-    def inner(interface: str) -> str:
+    def inner(interface: typing.Optional[str]) -> str:
         return mac
 
     return inner
