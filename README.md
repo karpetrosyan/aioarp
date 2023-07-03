@@ -5,8 +5,6 @@
 [![coverage](https://img.shields.io/codecov/c/github/karosis88/aioarp/master)](https://app.codecov.io/gh/karosis88/aioarp)
 ![license](https://img.shields.io/github/license/karosis88/aioarp)
 
-<span style='color: red'>WARNING</span>! This package contains functionality that can be used for evil purposes, so we recommend that you only use it for learning and improving the security of your application.
-
 -----
 
 **Table of Contents**
@@ -25,13 +23,22 @@ pip install aioarp
 ## Documentation
 [Click here](https://karosis88.github.io/aioarp/)
 
-## Turn off internet access for the target ip (LOCALHOST).
+## Arp spoofing.
 
 Using this command, you can disable internet access for any device on your local network.
 
 ```shell
 $ aioarp disable 192.168.0.81 192.168.0.1 enp0s3 --seconds 10
 ```
+
+or 
+
+```shell
+$ aioarp spoof 192.168.0.81 192.168.0.1 11:11:11:11:11:11  enp0s3 --seconds 10
+```
+
+`spoof` can be used to specify the fake mac address.
+
 Where...
 - `192.168.0.81` is a target IP address for which we are blocking internet access.
 - `192.168.0.1` is a gateway for our target IP address.
