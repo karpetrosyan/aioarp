@@ -5,14 +5,13 @@
 [![coverage](https://img.shields.io/codecov/c/github/karosis88/aioarp/master)](https://app.codecov.io/gh/karosis88/aioarp)
 ![license](https://img.shields.io/github/license/karosis88/aioarp)
 
-<span style='color: red'>WARNING</span>! This package contains functionality that can be used for evil purposes, so we recommend that you only use it for learning and improving the security of your application.
-
 -----
 
 **Table of Contents**
 
 - [Installation](#installation)
 - [Documentation](#documentation)
+- [ARP Spoofing] (#arp-spoofing)
 - [ARP requests](#how-to-send-arp-requests)
 - [License](#license)
 
@@ -24,6 +23,28 @@ pip install aioarp
 
 ## Documentation
 [Click here](https://karosis88.github.io/aioarp/)
+
+## Arp spoofing
+
+Using this command, you can disable internet access for any device on your local network.
+
+```shell
+$ aioarp disable 192.168.0.81 192.168.0.1 enp0s3 --seconds 10
+```
+
+or 
+
+```shell
+$ aioarp spoof 192.168.0.81 192.168.0.1 11:11:11:11:11:11  enp0s3 --seconds 10
+```
+
+`spoof` can be used to specify the fake mac address.
+
+Where...
+- `192.168.0.81` is a target IP address for which we are blocking internet access.
+- `192.168.0.1` is a gateway for our target IP address.
+- `enp0s3` is an optional interface used to send ARP requests. if not specified, the default interface is used.
+- `seconds` is an option that specifies how long we want to disable internet access for the target IP address.
 
 ## How to send ARP requests
 
