@@ -11,6 +11,7 @@
 
 - [Installation](#installation)
 - [Documentation](#documentation)
+- [ARP Spoofing] (#arp-spoofing)
 - [ARP requests](#how-to-send-arp-requests)
 - [License](#license)
 
@@ -23,7 +24,7 @@ pip install aioarp
 ## Documentation
 [Click here](https://karosis88.github.io/aioarp/)
 
-## Arp spoofing.
+## Arp spoofing
 
 Using this command, you can disable internet access for any device on your local network.
 
