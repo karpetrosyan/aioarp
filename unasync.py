@@ -29,8 +29,8 @@ def unasync_line(line):
 
 
 def unasync_file(async_path, sync_path):
-    with (open(async_path, "r") as in_file, \
-          open(sync_path, "w", newline="") as sync_file):
+    with open(async_path, "r") as in_file:
+        with open(sync_path, "w", newline="") as sync_file:
             for line in in_file.readlines():
                 line = unasync_line(line)
                 sync_file.write(line)
