@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.11 (3/7/2023)
+## 0.0.11 (4/7/2023)
 
 - Use `getmac` package for mac address detecting.
 - Add `send`, `disable` and `spoof` commands for the CLI. (#33)
