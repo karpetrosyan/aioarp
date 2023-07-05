@@ -69,7 +69,7 @@ import aioarp
 response = asyncio.run(aioarp.arequest('10.0.2.2', 'enp0s3'))
 ```
 
-Or without specifying an interface parameter
+Or without specifying an `interface` parameter
 
 ```
 response = aioarp.request('10.0.2.2')
