@@ -7,6 +7,7 @@ repo_url: https://github.com/karosis88/aioarp
 nav:
     - index.md
     - Requests: client.md
+    - ARP Spoofing: spoofing.md
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
