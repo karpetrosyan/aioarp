@@ -6,7 +6,6 @@ build-backend = "hatchling.build"
 name = "aioarp"
 dynamic = ["readme", "version"]
 description = 'Aioarp is a ARP protocol implementation that provides synchronous and asynchronous interfaces and gives you complete control over how ARP packets are sent.'
-readme = "README.md"
 requires-python = ">=3.7"
 license = "MIT"
 keywords = []
