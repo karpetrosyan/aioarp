@@ -1,12 +1,11 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
 
 [project]
 name = "aioarp"
-dynamic = ["version"]
+dynamic = ["readme", "version"]
 description = 'Aioarp is a ARP protocol implementation that provides synchronous and asynchronous interfaces and gives you complete control over how ARP packets are sent.'
-readme = "README.md"
 requires-python = ">=3.7"
 license = "MIT"
 keywords = []
@@ -74,3 +73,12 @@ exclude_also = [
   '__repr__',
   'raise NotImplementedError()'
 ]
+
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "README.md"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "CHANGELOG.md"
