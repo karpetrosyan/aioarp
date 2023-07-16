@@ -23,7 +23,7 @@ def build_arp_packet(
         interface: typing.Optional[str] = None,
 ) -> ArpPacket:
     if interface is None:
-        interface = aioarp.get_default_interface()
+        interface = aioarp.LocalNetwork().get_default_interface()
     if not is_valid_ipv4(target_ip):
         raise aioarp.InvalidIpError("Invalid IPv4 Address was received")
 
