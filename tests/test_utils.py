@@ -21,4 +21,4 @@ def test_parse_ip():
 
 
 def test_get_default_intreface():
-    assert aioarp.get_default_interface() == "enp0s3"
+    assert aioarp.LocalNetwork().get_default_interface() == "enp0s3"

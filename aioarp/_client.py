@@ -8,8 +8,7 @@ from ._arp import ProtocolType
 from ._async import async_send_arp
 from ._backends._base import SocketInterface
 from ._sync import sync_send_arp
-from ._utils import get_ip
-from ._utils import get_mac
+from ._utils import LocalNetwork
 from ._utils import is_valid_ipv4
 
 __all__ = (
@@ -32,8 +31,8 @@ def build_arp_packet(
     protocol_type = ProtocolType.ip
 
     # TODO: catch interface not found error
-    sender_mac = get_mac(interface)
-    sender_ip = get_ip()
+    sender_mac = LocalNetwork().get_mac(interface)
+    sender_ip = LocalNetwork().get_ip()
     target_mac = 'ff:ff:ff:ff:ff:ff'
 
     request_packet = ArpPacket(
