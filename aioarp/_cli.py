@@ -35,7 +35,7 @@ def send(
 ) -> None:  # pragma: no cover
         try:
             request_packet = aioarp.build_arp_packet(target_ip, interface)
-            interface = interface or aioarp.get_default_interface()
+            interface = interface or aioarp.LocalNetwork().get_default_interface()
 
             if wait_response:
                 print(f"Looking for {request_packet.target_ip} in "

@@ -10,7 +10,7 @@ from aioarp._arp import EthPacket
 from aioarp._arp import ProtocolType
 from aioarp._backends import Stream
 from aioarp._backends._base import SocketInterface
-from aioarp._utils import get_default_interface
+from aioarp._utils import LocalNetwork
 from aioarp._utils import is_valid_ipv4
 from aioarp.defaults import DEFAULT_READ_TIMEOUT
 from aioarp.defaults import DEFAULT_REPLY_MISSING_TIME
@@ -66,7 +66,7 @@ def sync_send_arp(arp_packet: ArpPacket,
         proto=ProtocolType.arp
     )
     if interface is None:  # pragma: no cover
-        interface = get_default_interface()
+        interface = LocalNetwork().get_default_interface()
     if not sock:  # pragma: no cover
         sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
     with Stream(interface=interface,
