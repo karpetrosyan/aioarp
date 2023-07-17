@@ -1,5 +1,9 @@
 # Changelog
 
+## development
+
+- Add LocalNetwork class. (#40)
+
 ## 0.0.11 (4/7/2023)
 
 - Use `getmac` package for mac address detecting.
