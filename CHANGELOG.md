@@ -2,7 +2,7 @@
 
 ## development
 
-- Add LocalNetwork class. (#40)
+- Add `LocalNetwork` class. (#40)
 
 ## 0.0.11 (4/7/2023)
 
