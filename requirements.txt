@@ -17,3 +17,4 @@ hatch==1.7.0
 # docs
 mkdocs==1.4.3
 mkdocs-material==9.1.15
+
